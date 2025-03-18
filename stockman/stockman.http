@@ -1,0 +1,6 @@
+@stockman_HostAddress = http://localhost:5171
+
+GET {{stockman_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
