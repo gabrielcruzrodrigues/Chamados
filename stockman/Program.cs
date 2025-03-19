@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using stockman.Database;
 using stockman.Extensions;
+using stockman.Repositories;
+using stockman.Repositories.Interfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,19 @@ builder.Services.AddCors(options =>
         })
 );
 
+// ----------------------- Inject container ------------------------------
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+
+// -------------------------- Configuring Environment variables --------------------------
+builder.Configuration.AddEnvironmentVariables();
+
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?.Replace("${DB_HOST}", Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost")
+    ?.Replace("${DB_PORT}", Environment.GetEnvironmentVariable("DB_PORT") ?? "5432")
+    ?.Replace("${DB_NAME}", Environment.GetEnvironmentVariable("DB_NAME") ?? "Stockman")
+    ?.Replace("${DB_USER}", Environment.GetEnvironmentVariable("DB_USER") ?? "postgres")
+    ?.Replace("${DB_PASS}", Environment.GetEnvironmentVariable("DB_PASS") ?? "1234");
+
 // ---------------- database config ----------------------
 string postgreSqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -33,6 +48,7 @@ builder.Services.AddDbContext<StockmanContext>(options =>
 
 // -------------------------- Configuring AutoMapper --------------------------
 builder.Services.AddAutoMapper(typeof(Program));
+
 
 var app = builder.Build();
 
