@@ -3,6 +3,8 @@ using stockman.Database;
 using stockman.Extensions;
 using stockman.Repositories;
 using stockman.Repositories.Interfaces;
+using stockman.Services;
+using stockman.Services.Interfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,7 @@ builder.Services.AddCors(options =>
 
 // ----------------------- Inject container ------------------------------
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 // -------------------------- Configuring Environment variables --------------------------
 builder.Configuration.AddEnvironmentVariables();

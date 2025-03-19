@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using stockman.Models;
 using stockman.Models.Dtos;
 using stockman.Repositories.Interfaces;
+using stockman.Services.Interfaces;
 using stockman.ViewModels;
 
 namespace stockman.Controllers
@@ -13,10 +14,12 @@ namespace stockman.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersRepository _userRepository;
+        private readonly IPasswordService _passwordService;
 
-        public UsersController(IUsersRepository userRepository)
+        public UsersController(IUsersRepository userRepository, IPasswordService passwordService)
         {
             _userRepository = userRepository;
+            _passwordService = passwordService;
         }
 
         [HttpGet]
@@ -36,6 +39,8 @@ namespace stockman.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateAsync(CreateUserViewModel request)
         {
+            var passwordHashed = _passwordService.HashPassword(request.Password);
+
             var user = new Users 
             {
                 Name = request.Name,
@@ -43,7 +48,7 @@ namespace stockman.Controllers
                 Role = request.Role,
                 CreatedAt = DateTime.UtcNow,
                 LastUpdatedAt = DateTime.UtcNow,
-                Password = request.Password,
+                Password = passwordHashed,
                 Status = true
             };
 
