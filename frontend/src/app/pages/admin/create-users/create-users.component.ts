@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { nameValidators } from '../../../validators/nameValidator';
 import { passwordValidator } from '../../../validators/passwordValidator';
 import { SpinningComponent } from "../../../components/spinning/spinning.component";
-import { CreateUser, ResponseCreateUser } from '../../../types/User';
+import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser } from '../../../types/User';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -74,12 +74,22 @@ export class CreateUsersComponent {
           this.router.navigate(['/users']);
           this.isLoading = false;
         },
-        error: (error) => {
-          this.toastr.error("Houve um erro ao tentar criar um novo usuário, procure o administrador do sistema!");
+        error: (error: ErrorResponseCreateUser) => {
           console.log(error);
-          this.isLoading = false;
-          this.router.navigate(['/users'])
-          return;
+          if (error.error.code == 409) {
+            this.isLoading = false;
+            if (error.error.type == 'name') {
+              this.nameErrors = ['Este nome já foi registrado, tente outro nome!'];
+            } else {
+              this.emailErrros = ['Este email já foi registrado, tente outro email!'];
+            }
+          } else {
+            this.toastr.error("Houve um erro ao tentar criar um novo usuário, procure o administrador do sistema!");
+            console.log(error);
+            this.isLoading = false;
+            this.router.navigate(['/users'])
+            return;
+          }
         }
       })
     }

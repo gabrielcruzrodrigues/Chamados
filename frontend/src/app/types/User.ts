@@ -13,3 +13,11 @@ export type ResponseCreateUser = {
      createdAt: string,
      lastUpdatedAt: string
 }
+
+export type ErrorResponseCreateUser = {
+     error: {
+          message: string,
+          type: string,
+          code: number
+     }
+}
