@@ -42,6 +42,16 @@ namespace stockman.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateAsync(CreateUserViewModel request)
         {
+            if (await _userRepository.GetByEmailAsync(request.Email) != null)
+            {
+                return Conflict(new { message = "Esse email já foi cadastrado", type = "email", code = 409 });
+            }
+
+            if (await _userRepository.GetByNameAsync(request.Name) != null)
+            {
+                return Conflict(new { message = "Esse nome já foi cadastrado", type = "name", code = 409 });
+            }
+
             var passwordHashed = _passwordService.HashPassword(request.Password);
 
             var user = new Users 

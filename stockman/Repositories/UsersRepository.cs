@@ -31,11 +31,6 @@ namespace stockman.Repositories
                 await _context.SaveChangesAsync();
                 return _mapper.Map<UserDto>(user);
             }
-            catch (DbUpdateException ex) when (ex.InnerException is PostgresException pgEx && pgEx.SqlState == "23505")
-            {
-                _logger.LogError($"Dados de usuários duplicados: {ex.Message}");
-                throw new HttpResponseException(400, "Algum dos dados já foi cadastrado!");
-            }
             catch (Exception ex)
             {
                 _logger.LogError($"Um erro aconteceu ao tentar criar um usuário! Err: {ex.Message}");
@@ -105,10 +100,15 @@ namespace stockman.Repositories
                 .Where(u => u.Status.Equals(true) && u.Email.Equals(email))
                 .FirstOrDefaultAsync();
 
-            if (user is null)
-            {
-                throw new HttpResponseException(404, $"Usuário não encontrado!");
-            }
+            return user;
+        }
+
+        public async Task<Users> GetByNameAsync(string name)
+        {
+            var user = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Status.Equals(true) && u.Name.Equals(name))
+                .FirstOrDefaultAsync();
 
             return user;
         }

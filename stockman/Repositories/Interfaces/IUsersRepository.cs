@@ -9,6 +9,7 @@ namespace stockman.Repositories.Interfaces
         Task<IEnumerable<UserDto>> GetAllUsersAsync();
         Task<UserDto> GetByIdAsync(long userId);
         Task<Users> GetByEmailAsync(string email);
+        Task<Users> GetByNameAsync(string name);
         Task<Users> GetByIdWithTrackingAsync(long userId);
         Task Update(Users userForUpdate);
         Task Disable(long userId);
