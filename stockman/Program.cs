@@ -70,10 +70,10 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:4200", "http://localhost:9090")
                 .AllowAnyHeader()
-                .WithMethods("*");
+                .AllowAnyMethod()
+                .AllowCredentials();
         })
 );
-
 // ----------------------- Inject container ------------------------------
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
@@ -111,7 +111,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors();
+app.UseCors(OriginsWithAllowedAccess);
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -17,7 +17,8 @@ export class UserService {
   ) { }
 
   create(data: CreateUser): Observable<ResponseCreateUser> {
-    const urlForRequest = this.url + 'Users';
+    console.log(data);
+    const urlForRequest = this.url + '/Users';
     return this.http.post<ResponseCreateUser>(urlForRequest, data, { observe: 'response' }).pipe(
       map((response: HttpResponse<ResponseCreateUser>) => {
         if (!response.body) {

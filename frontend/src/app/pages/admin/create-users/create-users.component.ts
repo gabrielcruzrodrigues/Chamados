@@ -7,15 +7,19 @@ import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
 import { nameValidators } from '../../../validators/nameValidator';
 import { passwordValidator } from '../../../validators/passwordValidator';
+import { SpinningComponent } from "../../../components/spinning/spinning.component";
+import { CreateUser, ResponseCreateUser } from '../../../types/User';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-users',
   standalone: true,
   imports: [
-    MainNavbarComponent, 
-    TopUserInfosComponent, 
-    InputErrorMessageComponent, 
-    ReactiveFormsModule
+    MainNavbarComponent,
+    TopUserInfosComponent,
+    InputErrorMessageComponent,
+    ReactiveFormsModule,
+    SpinningComponent
   ],
   templateUrl: './create-users.component.html',
   styleUrl: './create-users.component.sass'
@@ -23,6 +27,9 @@ import { passwordValidator } from '../../../validators/passwordValidator';
 export class CreateUsersComponent {
   teste: string[] = ['uma mensagem de erro'];
   userForm: FormGroup;
+
+  //variable for control spinning
+  isLoading: boolean = false;
 
   //variables for change the visibility of the password and passwordVarify inputs
   passwordVisible: boolean = false;
@@ -39,9 +46,9 @@ export class CreateUsersComponent {
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private router: Router
-  )
-  {
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, nameValidators()]],
       email: ['', [Validators.required, Validators.email]],
@@ -52,22 +59,42 @@ export class CreateUsersComponent {
   }
 
   Submit(): void {
-    if (this.userForm.invalid) {
+    if (this.userForm.invalid || !this.verifyPassword()) {
       this.getNameErrors();
       this.getEmailErrors();
       this.getPasswordErrors();
       this.getPasswordVerifyErrors();
-      return;
+    } else {
+      this.isLoading = true;
+      const user: CreateUser = this.userForm.value as CreateUser;
+
+      this.userService.create(user).subscribe({
+        next: (response: ResponseCreateUser) => {
+          this.toastr.success(`O usuário ${response.name} foi criado com sucesso!`);
+          this.router.navigate(['/users']);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.toastr.error("Houve um erro ao tentar criar um novo usuário, procure o administrador do sistema!");
+          console.log(error);
+          this.isLoading = false;
+          this.router.navigate(['/users'])
+          return;
+        }
+      })
     }
   }
 
-  verifyPassword(): void {
+  verifyPassword(): boolean {
     const password = this.userForm.get('password')?.value;
     const verifyPassword = this.userForm.get('passwordVerify')?.value;
 
     if (password !== verifyPassword) {
       this.wrongPassword = true;
+      return false;
     }
+
+    return true;
   }
 
   clearInputErrors(option: string): void {
@@ -82,7 +109,7 @@ export class CreateUsersComponent {
     if (option == 'password') {
       this.passwordErrros = [];
     }
-    
+
     if (option == 'passwordVerify') {
       this.wrongPassword = false;
       this.passwordVerifyErrors = [];
@@ -162,7 +189,7 @@ export class CreateUsersComponent {
   getPasswordVerifyErrors(): void {
     const passwordVerifyControl = this.userForm.get('passwordVerify');
     const errors: string[] = [];
-    
+
     if (passwordVerifyControl?.hasError('required')) {
       errors.push('A verificação de senha é obrigatória!');
       this.passwordVerifyErrors = errors;
