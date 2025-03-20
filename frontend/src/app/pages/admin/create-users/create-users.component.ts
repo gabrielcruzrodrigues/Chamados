@@ -5,6 +5,8 @@ import { TopUserInfosComponent } from "../../../components/top-user-infos/top-us
 import { InputErrorMessageComponent } from "../../../components/input-error-message/input-error-message.component";
 import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
+import { nameValidators } from '../../../validators/nameValidator';
+import { passwordValidator } from '../../../validators/passwordValidator';
 
 @Component({
   selector: 'app-create-users',
@@ -31,8 +33,8 @@ export class CreateUsersComponent {
   //arrays with errors 
   nameErrors: string[] = [];
   emailErrros: string[] = [];
-  phoneErrors: string[] = [];
   passwordErrros: string[] = [];
+  passwordVerifyErrors: string[] = [];
 
   constructor(
     private userService: UserService,
@@ -41,9 +43,9 @@ export class CreateUsersComponent {
   )
   {
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, nameValidators()]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, passwordValidator()]],
       passwordVerify: ['', Validators.required],
       role: [1, Validators.required]
     })
@@ -53,8 +55,9 @@ export class CreateUsersComponent {
     if (this.userForm.invalid) {
       this.getNameErrors();
       this.getEmailErrors();
-      this.getPhoneErrors();
       this.getPasswordErrors();
+      this.getPasswordVerifyErrors();
+      return;
     }
   }
 
@@ -67,8 +70,23 @@ export class CreateUsersComponent {
     }
   }
 
-  togglePasswordVisibility(): void {
-    this.passwordVisible = !this.passwordVisible;
+  clearInputErrors(option: string): void {
+    if (option == 'name') {
+      this.nameErrors = [];
+    }
+
+    if (option == 'email') {
+      this.emailErrros = [];
+    }
+
+    if (option == 'password') {
+      this.passwordErrros = [];
+    }
+    
+    if (option == 'passwordVerify') {
+      this.wrongPassword = false;
+      this.passwordVerifyErrors = [];
+    }
   }
 
   getNameErrors(): void {
@@ -77,17 +95,21 @@ export class CreateUsersComponent {
 
     if (nameControl?.hasError('required')) {
       errors.push('O nome é obrigatório.');
+      this.nameErrors = errors;
+      return;
     }
 
     if (nameControl?.hasError('minLength')) {
       errors.push('O nome deve conter mais de 2 caracteres.');
+      this.nameErrors = errors;
+      return;
     }
 
     if (nameControl?.hasError('missingLetter')) {
       errors.push("O nome deve conter pelo menos uma letra.");
+      this.nameErrors = errors;
+      return;
     }
-
-    this.nameErrors = errors;
   }
 
   getEmailErrors(): void {
@@ -96,50 +118,63 @@ export class CreateUsersComponent {
 
     if (emailControl?.hasError('required')) {
       errors.push('O email é obrigatório.');
+      this.emailErrros = errors;
+      return;
     }
 
     if (emailControl?.hasError('email')) {
       errors.push('Por favor, insira um email válido. Sem conter espaços antes ou depois!');
+      this.emailErrros = errors;
+      return;
     }
-
-    this.emailErrros = errors;
-  }
-
-  getPhoneErrors(): void {
-    const phoneControl = this.userForm.get('phone');
-    const errors: string[] = [];
-
-    if (phoneControl?.hasError('required')) {
-      errors.push('O telefone é obrigatório.');
-    }
-
-    if (phoneControl?.hasError('invalidPhoneNumber')) {
-      errors.push('O telefone inserido é inválido.');
-    }
-
-    this.phoneErrors = errors;
   }
 
   getPasswordErrors(): void {
     const passwordControl = this.userForm.get('password');
+    const passwordVerifyControl = this.userForm.get('passwordVerify');
     const errors: string[] = [];
 
     if (passwordControl?.hasError('required')) {
       errors.push('A senha é obrigatório.');
+      this.passwordErrros = errors;
+      return;
     }
 
     if (passwordControl?.hasError('passwordTooShort')) {
       errors.push('A senha deve conter pelo menos 8 caracteres.');
+      this.passwordErrros = errors;
+      return;
     }
 
     if (passwordControl?.hasError('missingLetter')) {
       errors.push('A senha deve conter pelo menos 1 letra.');
+      this.passwordErrros = errors;
+      return;
     }
 
     if (passwordControl?.hasError('missingNumber')) {
       errors.push('A senha deve conter pelo menos 1 número.');
+      this.passwordErrros = errors;
+      return;
+    }
+  }
+
+  getPasswordVerifyErrors(): void {
+    const passwordVerifyControl = this.userForm.get('passwordVerify');
+    const errors: string[] = [];
+    
+    if (passwordVerifyControl?.hasError('required')) {
+      errors.push('A verificação de senha é obrigatória!');
+      this.passwordVerifyErrors = errors;
+      return;
     }
 
-    this.passwordErrros = errors;
+    this.verifyPassword();
+
+    if (this.wrongPassword) {
+      errors.push('As senhas não são iguais!');
+      this.passwordVerifyErrors = errors;
+      return;
+    }
   }
 }
