@@ -98,6 +98,21 @@ namespace stockman.Repositories
             return user;
         }
 
+        public async Task<Users> GetByEmailAsync(string email)
+        {
+            var user = await _context.Users
+                .AsNoTracking()
+                .Where(u => u.Status.Equals(true) && u.Email.Equals(email))
+                .FirstOrDefaultAsync();
+
+            if (user is null)
+            {
+                throw new HttpResponseException(404, $"Usuário não encontrado!");
+            }
+
+            return user;
+        }
+
         public async Task Update(Users userForUpdate)
         {
             try

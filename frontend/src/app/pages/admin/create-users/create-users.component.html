@@ -1,0 +1,39 @@
+<app-main-navbar></app-main-navbar>
+<section class="main-section appear">
+     <app-top-user-infos></app-top-user-infos>
+
+     <section class="full-div">
+          <div class="title">
+               <i class="fa-solid fa-user-plus icon"></i>
+               <h2>Criar novo usuário</h2>
+          </div>
+
+          <form class="main-form">
+               <label>Nome:</label>
+               <input type="text" placeholder="Digite o Nome do novo usuário" name="name">
+               <app-input-error-message></app-input-error-message>
+
+               <label>Email:</label>
+               <input type="email" placeholder="Digite o Email do novo usuário" name="email">
+               <app-input-error-message></app-input-error-message>
+
+               <label>Senha:</label>
+               <input type="password" placeholder="Digite a senha do novo usuário" name="password">
+               <app-input-error-message></app-input-error-message>
+
+               <label>Confirmação de senha:</label>
+               <input type="password" placeholder="Digite novamente a senha do novo usuário" name="passwordVerify">
+               <app-input-error-message></app-input-error-message>
+
+               <label>Role:</label>
+               <select id="roleSelect" name="role" class="selectRole">
+                    <option value="" disabled selected>Selecione a role do usuário</option>
+                    <option value="0">Admin</option>
+                    <option value="1">Usuário</option>
+               </select>
+
+               <button type="submit">Cadastrar</button>
+          </form>
+     </section>
+
+</section>

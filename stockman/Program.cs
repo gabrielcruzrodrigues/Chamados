@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using stockman.Database;
 using stockman.Extensions;
 using stockman.Repositories;
@@ -9,12 +11,55 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//----------------------------- Config Sessions -----------------------------
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(24);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "your-auth-cookie-name";
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
+
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+//----------------------------- Config Swagger -----------------------------
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("cookie", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Cookie,
+        Name = "your-auth-cookie-name",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "cookie"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "cookie"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";
@@ -66,6 +111,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors();
+app.UseSession();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
