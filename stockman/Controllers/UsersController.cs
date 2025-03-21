@@ -62,6 +62,7 @@ namespace stockman.Controllers
                 CreatedAt = DateTime.UtcNow,
                 LastUpdatedAt = DateTime.UtcNow,
                 Password = passwordHashed,
+                LastAccess = DateTime.UtcNow,
                 Status = true
             };
 

@@ -10,5 +10,6 @@ namespace stockman.Models.Dtos
         public Roles Role { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
+        public DateTime LastAccess { get; set; }
     }
 }

@@ -1,0 +1,46 @@
+<app-main-navbar></app-main-navbar>
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<div class="main-section appear">
+     <app-top-user-infos></app-top-user-infos>
+
+     <div class="full-div">
+          <div class="title">
+               <i class="fa-solid fa-list icon"></i>
+               <h2>Lista de usuários</h2>
+          </div>
+          <div class="full-div buttons-options">
+               <button (click)="orderListAZ('name')" #nameOrderAZ class="search-options"><i class="fa-solid fa-sort button-icon"></i>{{ nameButtonOrderListAZ }}</button>
+               <button (click)="orderListAZ('email')" #emailOrderAZ class="search-options"><i class="fa-solid fa-sort button-icon"></i>{{ emailButtonOrderListAZ }}</button>
+               <!-- <select class="search-options" #roleOrderAZ (change)="orderListAZ('role')">
+                    <option disabled selected>Buscar pela role</option>
+                    <option value="0">Admin</option>
+                    <option value="1">Usuário</option>
+               </select> -->
+          </div>
+
+          <table class="custom-table">
+               <thead>
+                    <tr>
+                         <th>Nome</th>
+                         <th>Email</th>
+                         <th>Role</th>
+                         <th>Ultimo acesso</th>
+                         <th>Ações</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    <tr *ngFor="let user of users">
+                         <td>{{user.name}}</td>
+                         <td>{{user.email}}</td>
+                         <td>{{user.role}}</td>
+                         <td>{{user.lastAccess}}</td>
+                         <th class="actions">
+                              <button class="edit action"><i class="fa-solid fa-pen-to-square"></i></button>
+                              <button class="trash action"><i class="fa-solid fa-trash"></i></button>
+                         </th>
+                    </tr>
+               </tbody>
+          </table>
+     </div>
+
+</div>

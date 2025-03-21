@@ -31,5 +31,8 @@ public sealed class Users
     public required DateTime CreatedAt { get; set; }
 
     [Required]
-    public required DateTime LastUpdatedAt { get; set; } 
+    public required DateTime LastUpdatedAt { get; set; }
+
+    [Required]
+    public required DateTime LastAccess { get; set; }
 }

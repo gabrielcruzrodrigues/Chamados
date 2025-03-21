@@ -12,6 +12,17 @@ export type ResponseCreateUser = {
      role: number,
      createdAt: string,
      lastUpdatedAt: string
+     lastAccess: string
+}
+
+export type User = {
+     name: string,
+     email: string,
+     password: string,
+     role: number,
+     createdAt: string,
+     lastUpdatedAt: string
+     lastAccess: string
 }
 
 export type ErrorResponseCreateUser = {
