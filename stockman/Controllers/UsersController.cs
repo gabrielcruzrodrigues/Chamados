@@ -91,5 +91,12 @@ namespace stockman.Controllers
             await _userRepository.Disable(userId);
             return StatusCode(204);
         }
+
+        [HttpGet("search/{param}")]
+        public async Task<ActionResult> Search(string param)
+        {
+            var users = await _userRepository.Search(param);
+            return Ok(users);
+        }
     }
 }

@@ -38,6 +38,15 @@ namespace stockman.Repositories
             }
         }
 
+        public async Task<IEnumerable<UserDto>> Search(string param)
+        {
+            var users = await _context.Users
+                    .Where(u => u.Name.Contains(param) || u.Email.Contains(param))
+                    .ToListAsync();
+
+            return _mapper.Map<IEnumerable<UserDto>>(users);
+        }
+
         public async Task Disable(long userId)
         {
             var user = await GetByIdWithTrackingAsync(userId);

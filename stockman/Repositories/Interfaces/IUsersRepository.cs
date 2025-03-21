@@ -13,5 +13,6 @@ namespace stockman.Repositories.Interfaces
         Task<Users> GetByIdWithTrackingAsync(long userId);
         Task Update(Users userForUpdate);
         Task Disable(long userId);
+        Task<IEnumerable<UserDto>> Search(string param);
     }
 }

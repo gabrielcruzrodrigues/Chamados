@@ -18,29 +18,7 @@
                </select> -->
           </div>
 
-          <table class="custom-table">
-               <thead>
-                    <tr>
-                         <th>Nome</th>
-                         <th>Email</th>
-                         <th>Role</th>
-                         <th>Ultimo acesso</th>
-                         <th>Ações</th>
-                    </tr>
-               </thead>
-               <tbody>
-                    <tr *ngFor="let user of users">
-                         <td>{{user.name}}</td>
-                         <td>{{user.email}}</td>
-                         <td>{{user.role}}</td>
-                         <td>{{user.lastAccess}}</td>
-                         <th class="actions">
-                              <button class="edit action"><i class="fa-solid fa-pen-to-square"></i></button>
-                              <button class="trash action"><i class="fa-solid fa-trash"></i></button>
-                         </th>
-                    </tr>
-               </tbody>
-          </table>
+          <app-users-table [users]="users"></app-users-table>
      </div>
 
 </div>

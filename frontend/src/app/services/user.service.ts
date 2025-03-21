@@ -32,4 +32,9 @@ export class UserService {
     const urlForRequest = this.url + '/Users';
     return this.http.get<User[]>(urlForRequest, { observe: 'response' });
   }
+
+  search(param: string): Observable<HttpResponse<User[]>> {
+    const urlForRequest = this.url + `/Users/search/${param}`;
+    return this.http.get<User[]>(urlForRequest, { observe: 'response' });
+  }
 }

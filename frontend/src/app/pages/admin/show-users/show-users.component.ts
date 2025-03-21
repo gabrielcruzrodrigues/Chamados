@@ -8,16 +8,18 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { User } from '../../../types/User';
 import { CommonModule } from '@angular/common';
+import { UsersTableComponent } from "../../../components/users-table/users-table.component";
 
 @Component({
   selector: 'app-show-users',
   standalone: true,
   imports: [
-    MainNavbarComponent, 
-    TopUserInfosComponent, 
-    SpinningComponent, 
-    CommonModule
-  ],
+    MainNavbarComponent,
+    TopUserInfosComponent,
+    SpinningComponent,
+    CommonModule,
+    UsersTableComponent
+],
   templateUrl: './show-users.component.html',
   styleUrl: './show-users.component.sass'
 })

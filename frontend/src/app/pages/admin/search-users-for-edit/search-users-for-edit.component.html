@@ -1,0 +1,12 @@
+<app-main-navbar></app-main-navbar>
+<section class="main-section appear">
+     <app-top-user-infos></app-top-user-infos>
+     <app-main-search-user-box 
+          [title]="titleUsersSearchInput"
+          (searchUser)="onSearchUser($event)">
+     </app-main-search-user-box>
+
+     <app-users-table 
+          [users]="users">
+     </app-users-table>
+</section>
