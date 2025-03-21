@@ -25,6 +25,7 @@ export class MainSearchUserBoxComponent {
   ) { }
 
   search(event: Event): void {
+    event.preventDefault();
     const inputElement = document.getElementById('searchInput') as HTMLInputElement;
 
     if (inputElement.value) {

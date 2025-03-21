@@ -4,18 +4,27 @@ import { TopUserInfosComponent } from "../../../components/top-user-infos/top-us
 import { MainSearchUserBoxComponent } from "../../../components/main-search-user-box/main-search-user-box.component";
 import { UsersTableComponent } from "../../../components/users-table/users-table.component";
 import { User } from '../../../types/User';
+import { CommonModule } from '@angular/common';
+import { ModalConfirmComponent } from "../../../components/modal-confirm/modal-confirm.component";
 
 @Component({
-  selector: 'app-search-users-for-edit',
+  selector: 'app-search-users-for-delete',
   standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchUserBoxComponent, UsersTableComponent],
-  templateUrl: './search-users-for-edit.component.html',
-  styleUrl: './search-users-for-edit.component.sass'
+  imports: [
+    MainNavbarComponent,
+    TopUserInfosComponent,
+    MainSearchUserBoxComponent,
+    UsersTableComponent,
+    CommonModule,
+    ModalConfirmComponent
+],
+  templateUrl: './search-users-for-delete.component.html',
+  styleUrl: './search-users-for-delete.component.sass'
 })
-export class SearchUsersForEditComponent {
-  titleUsersSearchInput: string = 'Buscar usuários para a edição';
+export class SearchUsersForDeleteComponent {
+  titleUsersSearchInput: string = 'Buscar usuários para desativar';
   users: User[] = [];
-  typeActions: string = 'edit';
+  typeActions: string = 'trash';
 
   onSearchUser(users: User[]): void {
     this.users = users;

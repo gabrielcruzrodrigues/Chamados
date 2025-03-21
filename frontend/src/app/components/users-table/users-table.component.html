@@ -14,10 +14,21 @@
                <td>{{user.email}}</td>
                <td>{{user.role}}</td>
                <td>{{user.lastAccess}}</td>
-               <th class="actions">
+               <th *ngIf="typeActions == 'default'" class="actions">
                     <button class="edit action"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="trash action"><i class="fa-solid fa-trash"></i></button>
+                    <button (click)="openModal()" class="trash action"><i class="fa-solid fa-trash"></i></button>
+               </th>
+               <th *ngIf="typeActions == 'edit'" class="actions">
+                    <button class="edit action"><i class="fa-solid fa-pen-to-square"></i></button>
+               </th>
+               <th *ngIf="typeActions == 'trash'" class="actions">
+                    <button (click)="openModal()" class="trash action"><i class="fa-solid fa-trash"></i></button>
                </th>
           </tr>
      </tbody>
 </table>
+<app-modal-confirm 
+     *ngIf="isModalOpen" 
+     [message]="modalDeleteMessage"
+     (confirm)="onConfirmDelete($event)">
+</app-modal-confirm>

@@ -4,6 +4,7 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { UsersDashboardComponent } from './pages/admin/users-dashboard/users-dashboard.component';
 import { ShowUsersComponent } from './pages/admin/show-users/show-users.component';
 import { SearchUsersForEditComponent } from './pages/admin/search-users-for-edit/search-users-for-edit.component';
+import { SearchUsersForDeleteComponent } from './pages/admin/search-users-for-delete/search-users-for-delete.component';
 
 export const routes: Routes = [
      {
@@ -25,5 +26,9 @@ export const routes: Routes = [
      {
           path: 'users/show-results/edit',
           component: SearchUsersForEditComponent
+     },
+     {
+          path: 'users/show-results/trash',
+          component: SearchUsersForDeleteComponent
      }
 ];
