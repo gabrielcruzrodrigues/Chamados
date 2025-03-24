@@ -77,6 +77,7 @@ builder.Services.AddCors(options =>
 // ----------------------- Inject container ------------------------------
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<ISectorRepository, SectorRepository>();
 
 // -------------------------- Configuring Environment variables --------------------------
 builder.Configuration.AddEnvironmentVariables();

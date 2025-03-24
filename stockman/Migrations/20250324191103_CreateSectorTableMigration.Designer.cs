@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using stockman.Database;
@@ -11,9 +12,11 @@ using stockman.Database;
 namespace stockman.Migrations
 {
     [DbContext(typeof(StockmanContext))]
-    partial class StockmanContextModelSnapshot : ModelSnapshot
+    [Migration("20250324191103_CreateSectorTableMigration")]
+    partial class CreateSectorTableMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,15 +43,12 @@ namespace stockman.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Sectors");
+                    b.ToTable("Sector");
                 });
 
             modelBuilder.Entity("stockman.Models.Users", b =>
