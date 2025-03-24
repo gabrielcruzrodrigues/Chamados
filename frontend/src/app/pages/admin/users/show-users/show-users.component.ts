@@ -1,14 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MainNavbarComponent } from "../../../components/main-navbar/main-navbar.component";
-import { TopUserInfosComponent } from "../../../components/top-user-infos/top-user-infos.component";
-import { SpinningComponent } from "../../../components/spinning/spinning.component";
-import { UserService } from '../../../services/user.service';
+import { MainNavbarComponent } from "../../../../components/main-navbar/main-navbar.component";
+import { TopUserInfosComponent } from "../../../../components/top-user-infos/top-user-infos.component";
+import { SpinningComponent } from "../../../../components/spinning/spinning.component";
+import { UserService } from '../../../../services/user.service';
 import { HttpResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { User } from '../../../types/User';
+import { User } from '../../../../types/User';
 import { CommonModule } from '@angular/common';
-import { UsersTableComponent } from "../../../components/users-table/users-table.component";
+import { UsersTableComponent } from "../../../../components/users-table/users-table.component";
 
 @Component({
   selector: 'app-show-users',
@@ -26,6 +26,7 @@ import { UsersTableComponent } from "../../../components/users-table/users-table
 export class ShowUsersComponent implements OnInit{
   isLoading: boolean = true;
   users: User[] = [];
+  title: string = 'Users';
 
   orderNameListAZToggle: boolean = false;
   nameButtonOrderListAZ: string = 'Ordenar Nome por A - Z';

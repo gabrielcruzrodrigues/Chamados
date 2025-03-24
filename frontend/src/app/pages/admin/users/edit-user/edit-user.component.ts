@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MainNavbarComponent } from "../../../components/main-navbar/main-navbar.component";
-import { TopUserInfosComponent } from "../../../components/top-user-infos/top-user-infos.component";
-import { nameValidators } from '../../../validators/nameValidator';
-import { passwordValidator } from '../../../validators/passwordValidator';
+import { MainNavbarComponent } from "../../../../components/main-navbar/main-navbar.component";
+import { TopUserInfosComponent } from "../../../../components/top-user-infos/top-user-infos.component";
+import { nameValidators } from '../../../../validators/nameValidator';
+import { passwordValidator } from '../../../../validators/passwordValidator';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser, UpdateUser, User } from '../../../types/User';
-import { InputErrorMessageComponent } from "../../../components/input-error-message/input-error-message.component";
-import { SpinningComponent } from "../../../components/spinning/spinning.component";
+import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser, UpdateUser, User } from '../../../../types/User';
+import { InputErrorMessageComponent } from "../../../../components/input-error-message/input-error-message.component";
+import { SpinningComponent } from "../../../../components/spinning/spinning.component";
 import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs';
 import { response } from 'express';
@@ -29,6 +29,7 @@ import { response } from 'express';
 })
 export class EditUserComponent implements OnInit{
   userForm: FormGroup;
+  title: string = 'Users';
 
   //variable for control spinning
   isLoading: boolean = true;

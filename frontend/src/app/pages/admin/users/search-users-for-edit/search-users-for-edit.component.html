@@ -1,6 +1,6 @@
 <app-main-navbar></app-main-navbar>
 <section class="main-section appear">
-     <app-top-user-infos></app-top-user-infos>
+     <app-top-user-infos [title]="title"></app-top-user-infos>
      <app-main-search-user-box 
           [title]="titleUsersSearchInput"
           (searchUser)="onSearchUser($event)">

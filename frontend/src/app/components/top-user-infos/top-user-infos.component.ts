@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-top-user-infos',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './top-user-infos.component.sass'
 })
 export class TopUserInfosComponent {
-
+  @Input() title: string = 'informações principais';
 }

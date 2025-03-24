@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { CreateUsersComponent } from './pages/admin/create-users/create-users.component';
-import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
-import { UsersDashboardComponent } from './pages/admin/users-dashboard/users-dashboard.component';
-import { ShowUsersComponent } from './pages/admin/show-users/show-users.component';
-import { SearchUsersForEditComponent } from './pages/admin/search-users-for-edit/search-users-for-edit.component';
-import { SearchUsersForDeleteComponent } from './pages/admin/search-users-for-delete/search-users-for-delete.component';
-import { EditUserComponent } from './pages/admin/edit-user/edit-user.component';
+import { CreateUsersComponent } from './pages/admin/users/create-users/create-users.component';
+import { DashboardComponent } from './pages/admin/users/dashboard/dashboard.component';
+import { ShowUsersComponent } from './pages/admin/users/show-users/show-users.component';
+import { SearchUsersForEditComponent } from './pages/admin/users/search-users-for-edit/search-users-for-edit.component';
+import { SearchUsersForDeleteComponent } from './pages/admin/users/search-users-for-delete/search-users-for-delete.component';
+import { EditUserComponent } from './pages/admin/users/edit-user/edit-user.component';
+import { UsersDashboardComponent } from './pages/admin/users/users-dashboard/users-dashboard.component';
 
 export const routes: Routes = [
      {

@@ -1,12 +1,12 @@
-<app-main-navbar></app-main-navbar>
 <app-spinning [isLoading]="isLoading"></app-spinning>
+<app-main-navbar></app-main-navbar>
 <section class="main-section appear">
-     <app-top-user-infos></app-top-user-infos>
+     <app-top-user-infos [title]="title"></app-top-user-infos>
 
      <section class="full-div">
           <div class="title">
-               <i class="fa-solid fa-user-pen icon"></i>
-               <h2>Editar usuário</h2>
+               <i class="fa-solid fa-user-plus icon"></i>
+               <h2>Criar novo usuário</h2>
           </div>
 
           <form class="main-form" [formGroup]="userForm" (ngSubmit)="Submit()">
@@ -30,21 +30,21 @@
                     (change)="getEmailErrors()">
                <app-input-error-message [errors]="emailErrros"></app-input-error-message>
 
-               <label>Nova senha: (Apenas para a alteração de senha!)</label>
+               <label>Senha:</label>
                <input 
                     type="password" 
                     formControlName="password" 
-                    placeholder="Digite a nova senha do usuário (Opcional)" 
+                    placeholder="Digite a senha do novo usuário" 
                     name="password"
                     (input)="clearInputErrors('password')"
                     (change)="getPasswordErrors()">
                <app-input-error-message [errors]="passwordErrros"></app-input-error-message>
 
-               <label>Confirmação de senha: (Apenas para a alteração de senha!)</label>
+               <label>Confirmação de senha:</label>
                <input 
                     type="password" 
                     formControlName="passwordVerify" 
-                    placeholder="Digite novamente a nova senha do usuário (Opcional)" 
+                    placeholder="Digite novamente a senha do novo usuário" 
                     name="'passwordVerify'"
                     (input)="clearInputErrors('passwordVerify')"
                     (change)="getPasswordVerifyErrors()">

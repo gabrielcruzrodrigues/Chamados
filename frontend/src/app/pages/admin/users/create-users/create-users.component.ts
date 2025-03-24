@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MainNavbarComponent } from '../../../components/main-navbar/main-navbar.component';
-import { TopUserInfosComponent } from "../../../components/top-user-infos/top-user-infos.component";
-import { InputErrorMessageComponent } from "../../../components/input-error-message/input-error-message.component";
-import { UserService } from '../../../services/user.service';
+import { MainNavbarComponent } from '../../../../components/main-navbar/main-navbar.component';
+import { TopUserInfosComponent } from "../../../../components/top-user-infos/top-user-infos.component";
+import { InputErrorMessageComponent } from "../../../../components/input-error-message/input-error-message.component";
+import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
-import { nameValidators } from '../../../validators/nameValidator';
-import { passwordValidator } from '../../../validators/passwordValidator';
-import { SpinningComponent } from "../../../components/spinning/spinning.component";
-import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser } from '../../../types/User';
+import { nameValidators } from '../../../../validators/nameValidator';
+import { passwordValidator } from '../../../../validators/passwordValidator';
+import { SpinningComponent } from "../../../../components/spinning/spinning.component";
+import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser } from '../../../../types/User';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -25,8 +25,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './create-users.component.sass'
 })
 export class CreateUsersComponent {
-  teste: string[] = ['uma mensagem de erro'];
   userForm: FormGroup;
+  title: string = 'Users';
 
   //variable for control spinning
   isLoading: boolean = false;
