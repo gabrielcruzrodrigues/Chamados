@@ -35,11 +35,11 @@ export class MainSearchUserBoxComponent {
           const users = response.body ?? [];
 
           if (users.length == 0) {
-            this.toastr.error("Nenhum usuário encontrado!")
+            this.toastr.info("Nenhum usuário encontrado!")
           }
           
           this.searchUser.emit(users);
-          this.isLoading = false;
+          // this.isLoading = false;
         },
         error: (error) => {
           if (error.status == 500) {

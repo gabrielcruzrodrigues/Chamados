@@ -41,7 +41,7 @@ namespace stockman.Repositories
         public async Task<IEnumerable<UserDto>> Search(string param)
         {
             var users = await _context.Users
-                    .Where(u => u.Name.Contains(param) || u.Email.Contains(param))
+                    .Where(u => u.Name.Contains(param) && u.Status.Equals(true) || u.Email.Contains(param) && u.Status.Equals(true))
                     .ToListAsync();
 
             return _mapper.Map<IEnumerable<UserDto>>(users);
@@ -85,6 +85,8 @@ namespace stockman.Repositories
                 throw new HttpResponseException(404, $"Usuário não encontrado!");
             }
 
+
+
             return _mapper.Map<UserDto>(user);
         }
 
@@ -125,8 +127,7 @@ namespace stockman.Repositories
         public async Task Update(Users userForUpdate)
         {
             try
-            {
-                userForUpdate.LastUpdatedAt = DateTime.UtcNow;
+            { 
                 _context.Users.Entry(userForUpdate).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             } catch (Exception ex)

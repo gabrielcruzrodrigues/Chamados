@@ -5,6 +5,7 @@ import { UsersDashboardComponent } from './pages/admin/users-dashboard/users-das
 import { ShowUsersComponent } from './pages/admin/show-users/show-users.component';
 import { SearchUsersForEditComponent } from './pages/admin/search-users-for-edit/search-users-for-edit.component';
 import { SearchUsersForDeleteComponent } from './pages/admin/search-users-for-delete/search-users-for-delete.component';
+import { EditUserComponent } from './pages/admin/edit-user/edit-user.component';
 
 export const routes: Routes = [
      {
@@ -30,5 +31,9 @@ export const routes: Routes = [
      {
           path: 'users/show-results/trash',
           component: SearchUsersForDeleteComponent
+     },
+     {
+          path: 'users/edit/:userId',
+          component: EditUserComponent
      }
 ];

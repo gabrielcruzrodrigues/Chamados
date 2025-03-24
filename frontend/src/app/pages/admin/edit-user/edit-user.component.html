@@ -1,0 +1,66 @@
+<app-main-navbar></app-main-navbar>
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<section class="main-section appear">
+     <app-top-user-infos></app-top-user-infos>
+
+     <section class="full-div">
+          <div class="title">
+               <i class="fa-solid fa-user-pen icon"></i>
+               <h2>Editar usuário</h2>
+          </div>
+
+          <form class="main-form" [formGroup]="userForm" (ngSubmit)="Submit()">
+               <label>Nome:</label>
+               <input 
+                    type="text" 
+                    formControlName="name" 
+                    placeholder="Digite o Nome do novo usuário" 
+                    name="name"
+                    (input)="clearInputErrors('name')"
+                    (change)="getNameErrors()">
+               <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+
+               <label>Email:</label>
+               <input 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="Digite o Email do novo usuário" 
+                    name="email"
+                    (input)="clearInputErrors('email')"
+                    (change)="getEmailErrors()">
+               <app-input-error-message [errors]="emailErrros"></app-input-error-message>
+
+               <label>Nova senha: (Apenas para a alteração de senha!)</label>
+               <input 
+                    type="password" 
+                    formControlName="password" 
+                    placeholder="Digite a nova senha do usuário (Opcional)" 
+                    name="password"
+                    (input)="clearInputErrors('password')"
+                    (change)="getPasswordErrors()">
+               <app-input-error-message [errors]="passwordErrros"></app-input-error-message>
+
+               <label>Confirmação de senha: (Apenas para a alteração de senha!)</label>
+               <input 
+                    type="password" 
+                    formControlName="passwordVerify" 
+                    placeholder="Digite novamente a nova senha do usuário (Opcional)" 
+                    name="'passwordVerify'"
+                    (input)="clearInputErrors('passwordVerify')"
+                    (change)="getPasswordVerifyErrors()">
+               <app-input-error-message [errors]="passwordVerifyErrors"></app-input-error-message>
+
+               <label>Role:</label>
+               <select 
+                    id="roleSelect"
+                    formControlName="role" 
+                    name="role" 
+                    class="selectRole">
+                         <option value="0">Admin</option>
+                         <option selected value="1">Usuário</option>
+               </select>
+
+               <button type="submit">Cadastrar</button>
+          </form>
+     </section>
+</section>

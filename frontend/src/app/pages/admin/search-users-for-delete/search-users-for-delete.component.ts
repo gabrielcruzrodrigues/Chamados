@@ -15,9 +15,8 @@ import { ModalConfirmComponent } from "../../../components/modal-confirm/modal-c
     TopUserInfosComponent,
     MainSearchUserBoxComponent,
     UsersTableComponent,
-    CommonModule,
-    ModalConfirmComponent
-],
+    CommonModule
+  ],
   templateUrl: './search-users-for-delete.component.html',
   styleUrl: './search-users-for-delete.component.sass'
 })

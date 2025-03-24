@@ -15,14 +15,14 @@
                <td>{{user.role}}</td>
                <td>{{user.lastAccess}}</td>
                <th *ngIf="typeActions == 'default'" class="actions">
-                    <button class="edit action"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button (click)="openModal()" class="trash action"><i class="fa-solid fa-trash"></i></button>
+                    <button class="edit action" (click)="goToEditPage(user.id)"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button (click)="openModal(user.id)" class="trash action"><i class="fa-solid fa-trash"></i></button>
                </th>
                <th *ngIf="typeActions == 'edit'" class="actions">
-                    <button class="edit action"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="edit action" (click)="goToEditPage(user.id)"><i class="fa-solid fa-pen-to-square"></i></button>
                </th>
                <th *ngIf="typeActions == 'trash'" class="actions">
-                    <button (click)="openModal()" class="trash action"><i class="fa-solid fa-trash"></i></button>
+                    <button (click)="openModal(user.id)" class="trash action"><i class="fa-solid fa-trash"></i></button>
                </th>
           </tr>
      </tbody>
@@ -32,3 +32,4 @@
      [message]="modalDeleteMessage"
      (confirm)="onConfirmDelete($event)">
 </app-modal-confirm>
+<app-spinning [isLoading]="isLoading"></app-spinning>

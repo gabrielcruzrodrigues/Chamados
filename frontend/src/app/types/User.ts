@@ -5,6 +5,14 @@ export type CreateUser = {
      role: number
 }
 
+export type UpdateUser = {
+     id: number,
+     name: string,
+     email: string,
+     password: string,
+     role: number
+}
+
 export type ResponseCreateUser = {
      name: string,
      email: string,
@@ -16,6 +24,7 @@ export type ResponseCreateUser = {
 }
 
 export type User = {
+     id: number,
      name: string,
      email: string,
      password: string,

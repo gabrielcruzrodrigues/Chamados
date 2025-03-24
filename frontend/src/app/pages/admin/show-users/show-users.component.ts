@@ -35,8 +35,8 @@ export class ShowUsersComponent implements OnInit{
   emailButtonOrderListAZ: string = 'Ordenar Email por A - Z';
   @ViewChild('emailOrderAZ') emailOrderAZ!: ElementRef;
 
-  orderRoleListAZToggle: boolean = false;
-  @ViewChild('roleOrderAZ') roleOrderAZ!: ElementRef;
+  // orderRoleListAZToggle: boolean = false;
+  // @ViewChild('roleOrderAZ') roleOrderAZ!: ElementRef;
 
   constructor(
     private userService: UserService,

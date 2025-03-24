@@ -74,12 +74,36 @@ namespace stockman.Controllers
         public async Task<IActionResult> UpdateAsync(long userId, UpdateUserViewModel request)
         {
             var user = await _userRepository.GetByIdWithTrackingAsync(userId);
+            var emailVerify = await _userRepository.GetByEmailAsync(request.Email);
+            var nameVerify = await _userRepository.GetByNameAsync(request.Name);
+
+            if (emailVerify != null && emailVerify.Email != user.Email)
+                return Conflict("Este email já esta cadastrado, tente um email diferente!");
+
+            if (nameVerify != null && nameVerify.Name != user.Name)
+                return Conflict("Este nome já esta cadastrado, tente um nome diferente!");
 
             user.Name = request.Name ?? user.Name;
             user.Email = request.Email ?? user.Email;
 
             if (request.Role != null)
-                user.Role = request.Role.Value;
+            {
+                if (request.Role == 0)
+                {
+                    user.Role = Enuns.Roles.ADMIN;
+                }
+                if (request.Role == 1)
+                {
+                    user.Role = Enuns.Roles.USER;
+                }
+            }
+
+            user.LastUpdatedAt = DateTime.UtcNow;
+
+            if (!request.Password.IsNullOrEmpty()) {
+                var passwordHashed = _passwordService.HashPassword(request.Password);
+                user.Password = passwordHashed;
+            }
 
             await _userRepository.Update(user);
             return StatusCode(204);
