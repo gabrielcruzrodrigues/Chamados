@@ -1,0 +1,34 @@
+<table class="custom-table">
+     <thead>
+          <tr>
+               <th>Id</th>
+               <th>Nome</th>
+               <th>Data de criação</th>
+               <th>Data da última modificação</th>
+               <th>Ações</th>
+          </tr>
+     </thead>
+     <tbody>
+          <tr *ngFor="let sector of sectors">
+               <td>{{sector.id}}</td>
+               <td>{{sector.name}}</td>
+               <td>{{sector.createdAt}}</td>
+               <td>{{sector.lastUpdatedAt}}</td>
+               <th *ngIf="typeActions == 'default'" class="actions">
+                    <button class="edit action" (click)="goToEditPage(sector.id)"><i
+                              class="fa-solid fa-pen-to-square"></i></button>
+                    <button (click)="openModal(sector.id)" class="trash action"><i class="fa-solid fa-trash"></i></button>
+               </th>
+               <th *ngIf="typeActions == 'edit'" class="actions">
+                    <button class="edit action" (click)="goToEditPage(sector.id)"><i
+                              class="fa-solid fa-pen-to-square"></i></button>
+               </th>
+               <th *ngIf="typeActions == 'trash'" class="actions">
+                    <button (click)="openModal(sector.id)" class="trash action"><i class="fa-solid fa-trash"></i></button>
+               </th>
+          </tr>
+     </tbody>
+</table>
+<app-modal-confirm *ngIf="isModalOpen" [message]="modalDeleteMessage" (confirm)="onConfirmDelete($event)">
+</app-modal-confirm>
+<app-spinning [isLoading]="isLoading"></app-spinning>

@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './modal-confirm.component.sass'
 })
 export class ModalConfirmComponent {
-  @Input() message: string = 'Tem certeza de que deseja excluir?';
+  @Input() message: string = 'Tem certeza de que deseja desativar?';
   @Output() confirm = new EventEmitter<boolean>();
 
   closeModal(result: boolean): void {

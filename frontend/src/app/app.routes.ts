@@ -6,6 +6,9 @@ import { SearchUsersForEditComponent } from './pages/admin/users/search-users-fo
 import { SearchUsersForDeleteComponent } from './pages/admin/users/search-users-for-delete/search-users-for-delete.component';
 import { EditUserComponent } from './pages/admin/users/edit-user/edit-user.component';
 import { UsersDashboardComponent } from './pages/admin/users/users-dashboard/users-dashboard.component';
+import { SectorsDashboardComponent } from './pages/admin/sectors/sectors-dashboard/sectors-dashboard.component';
+import { CreateSectorsComponent } from './pages/admin/sectors/create-sectors/create-sectors.component';
+import { ShowSectorsComponent } from './pages/admin/sectors/show-sectors/show-sectors.component';
 
 export const routes: Routes = [
      {
@@ -35,5 +38,17 @@ export const routes: Routes = [
      {
           path: 'users/edit/:userId',
           component: EditUserComponent
+     },
+     {
+          path: 'sectors',
+          component: SectorsDashboardComponent
+     },
+     {
+          path: 'create-sector',
+          component: CreateSectorsComponent
+     },
+     {
+          path: 'show-sectors',
+          component: ShowSectorsComponent
      }
 ];

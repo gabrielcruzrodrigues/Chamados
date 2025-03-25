@@ -70,6 +70,16 @@ public class SectorRepository : ISectorRepository
         return sector;
     }
 
+    public async Task<Sector> GetByNameAsync(string sectorName)
+    {
+        var sector = await _context.Sectors
+            .AsNoTracking()
+            .Where(s => s.Status.Equals(true))
+            .FirstOrDefaultAsync(u => u.Name.Equals(sectorName));
+
+        return sector;
+    }
+
     public async Task<Sector> GetByIdWithTrackingAsync(int sectorId)
     {
         var sector = await _context.Sectors

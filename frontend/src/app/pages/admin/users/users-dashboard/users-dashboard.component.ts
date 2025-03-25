@@ -13,5 +13,5 @@ import { TopUserInfosComponent } from '../../../../components/top-user-infos/top
   styleUrl: './users-dashboard.component.sass'
 })
 export class UsersDashboardComponent {
-  title: string = 'Users';
+  title: string = 'Usuários';
 }

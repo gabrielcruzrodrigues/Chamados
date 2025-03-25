@@ -1,0 +1,30 @@
+<app-main-navbar></app-main-navbar>
+<section class="main-section appear">
+     <app-top-user-infos [title]="title"></app-top-user-infos>
+     <section class="first-options">
+          <div class="option" [routerLink]="['/create-sector']">
+               <div class="icon-div green">
+                    <i class="fa-solid fa-vector-square icon"></i>
+               </div>
+               <p class="option-title">Criar setor</p>
+          </div>
+          <div class="option" [routerLink]="['/show-sectors']">
+               <div class="icon-div blue">
+                    <i class="fa-solid fa-eye icon"></i>
+               </div>
+               <p class="option-title">Exibir setores</p>
+          </div>
+          <div class="option" [routerLink]="['/users/show-results/edit']">
+               <div class="icon-div yellow">
+                    <i class="fa-solid fa-pen-to-square icon"></i>
+               </div>
+               <p class="option-title">Atualizar setor</p>
+          </div>
+          <div class="option" [routerLink]="['/users/show-results/trash']">
+               <div class="icon-div red">
+                    <i class="fa-solid fa-trash icon"></i>
+               </div>
+               <p class="option-title">Desativar setor</p>
+          </div>
+     </section>
+</section>

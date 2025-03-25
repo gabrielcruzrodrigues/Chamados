@@ -20,6 +20,10 @@ public class SectorController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Sector>> CreateAsync(CreateSectorViewModel request)
     {
+        var sectorNameVerify = await _repository.GetByNameAsync(request.Name);
+        if (sectorNameVerify is not null)
+            return Conflict(new { message = "Nome de setor já cadastrado, tente outro nome!" });
+
         var sector = request.CreateSector();
         var result = await _repository.CreateAsync(sector);
         return StatusCode(201, result);
