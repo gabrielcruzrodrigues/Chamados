@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using stockman.Models;
+using stockman.Repositories;
 using stockman.Repositories.Interfaces;
 using stockman.ViewModels;
 
@@ -73,6 +74,13 @@ public class SectorController : ControllerBase
         await _repository.UpdateAsync(sectorUpdated);
 
         return NoContent();
+    }
+
+    [HttpGet("search/{param}")]
+    public async Task<ActionResult> Search(string param)
+    {
+        var sectors = await _repository.Search(param);
+        return Ok(sectors);
     }
 }
 

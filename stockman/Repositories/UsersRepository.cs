@@ -108,7 +108,7 @@ namespace stockman.Repositories
         {
             var user = await _context.Users
                 .AsNoTracking()
-                .Where(u => u.Status.Equals(true) && u.Email.Equals(email))
+                .Where(u => u.Status.Equals(true))
                 .FirstOrDefaultAsync();
 
             return user;
@@ -118,7 +118,7 @@ namespace stockman.Repositories
         {
             var user = await _context.Users
                 .AsNoTracking()
-                .Where(u => u.Status.Equals(true) && u.Name.Equals(name))
+                .Where(u => u.Status.Equals(true))
                 .FirstOrDefaultAsync();
 
             return user;

@@ -8,6 +8,7 @@ public interface ISectorRepository
     Task<IEnumerable<Sector>> GetAllAsync();
     Task<Sector> GetByIdAsync(int sector);
     Task<Sector> GetByNameAsync(string sectorName);
+    Task<IEnumerable<Sector>> Search(string sectorName);
     Task<Sector> GetByIdWithTrackingAsync(int sector);
     Task UpdateAsync(Sector sector);
     Task DeleteAsync(Sector sector);

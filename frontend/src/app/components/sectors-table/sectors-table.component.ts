@@ -62,6 +62,6 @@ export class SectorsTableComponent {
   }
 
   goToEditPage(sectorId: number): void {
-    this.router.navigate([`/users/edit/${sectorId}`]);
+    this.router.navigate([`/sectors/edit/${sectorId}`]);
   }
 }

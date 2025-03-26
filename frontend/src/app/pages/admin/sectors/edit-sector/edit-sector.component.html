@@ -1,0 +1,21 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-main-navbar></app-main-navbar>
+<section class="main-section appear">
+     <app-top-user-infos [title]="title"></app-top-user-infos>
+
+     <section class="full-div">
+          <div class="title">
+               <i class="fa-solid fa-vector-square icon"></i>
+               <h2>Editar setor</h2>
+          </div>
+
+          <form class="main-form" [formGroup]="sectorForm" (ngSubmit)="submit()">
+               <label>Nome:</label>
+               <input type="text" formControlName="name" placeholder="Digite o Nome do novo usuário" name="name"
+                    (input)="clearInputErrors()" (change)="getNameErrors()">
+               <app-input-error-message [errors]="nameErrors"></app-input-error-message>
+
+               <button type="submit">Cadastrar</button>
+          </form>
+     </section>
+</section>

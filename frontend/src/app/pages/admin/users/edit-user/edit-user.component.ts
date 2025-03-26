@@ -114,7 +114,7 @@ export class EditUserComponent implements OnInit{
               this.emailErrros = ['Este email já foi registrado, tente outro email!'];
             }
           } else {
-            this.toastr.error("Houve um erro ao tentar criar um novo usuário, procure o administrador do sistema!");
+            this.toastr.error("Houve um erro ao tentar atualizar o usuário, procure o administrador do sistema!");
             console.log(error);
             this.isLoading = false;
             this.router.navigate(['/users'])

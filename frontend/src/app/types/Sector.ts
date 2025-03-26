@@ -9,3 +9,8 @@ export type Sector = {
      createdAt: string,
      lastUpdatedAt: string
 }
+
+export type UpdateSector = {
+     id: number,
+     name: string
+}

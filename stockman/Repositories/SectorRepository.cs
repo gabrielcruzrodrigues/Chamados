@@ -2,6 +2,7 @@
 using stockman.Database;
 using stockman.Extensions;
 using stockman.Models;
+using stockman.Models.Dtos;
 using stockman.Repositories.Interfaces;
 using System;
 
@@ -74,10 +75,18 @@ public class SectorRepository : ISectorRepository
     {
         var sector = await _context.Sectors
             .AsNoTracking()
-            .Where(s => s.Status.Equals(true))
             .FirstOrDefaultAsync(u => u.Name.Equals(sectorName));
 
         return sector;
+    }
+
+    public async Task<IEnumerable<Sector>> Search(string param)
+    {
+        var sectors = await _context.Sectors
+                .Where(s => s.Name.Contains(param) && s.Status.Equals(true))
+                .ToListAsync();
+
+        return sectors;
     }
 
     public async Task<Sector> GetByIdWithTrackingAsync(int sectorId)

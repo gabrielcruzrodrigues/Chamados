@@ -1,0 +1,13 @@
+<app-main-navbar></app-main-navbar>
+<section class="main-section appear">
+     <app-top-user-infos [title]="title"></app-top-user-infos>
+     <app-main-search-sectors-box 
+          [title]="titleUsersSearchInput"
+          (searchSector)="onSearchSector($event)">
+     </app-main-search-sectors-box>
+
+     <app-sectors-table 
+          [sectors]="sectors"
+          [typeActions]="typeActions">
+     </app-sectors-table>
+</section>

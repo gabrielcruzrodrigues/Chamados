@@ -9,6 +9,9 @@ import { UsersDashboardComponent } from './pages/admin/users/users-dashboard/use
 import { SectorsDashboardComponent } from './pages/admin/sectors/sectors-dashboard/sectors-dashboard.component';
 import { CreateSectorsComponent } from './pages/admin/sectors/create-sectors/create-sectors.component';
 import { ShowSectorsComponent } from './pages/admin/sectors/show-sectors/show-sectors.component';
+import { SearchSectorsForEditComponent } from './pages/admin/sectors/search-sectors-for-edit/search-sectors-for-edit.component';
+import { SearchSectorsForTrashComponent } from './pages/admin/sectors/search-sectors-for-trash/search-sectors-for-trash.component';
+import { EditSectorComponent } from './pages/admin/sectors/edit-sector/edit-sector.component';
 
 export const routes: Routes = [
      {
@@ -50,5 +53,17 @@ export const routes: Routes = [
      {
           path: 'show-sectors',
           component: ShowSectorsComponent
-     }
+     },
+     {
+          path: 'sectors/show-results/edit',
+          component: SearchSectorsForEditComponent
+     },
+     {
+          path: 'sectors/show-results/trash',
+          component: SearchSectorsForTrashComponent
+     },
+     {
+          path: 'sectors/edit/:sectorId',
+          component: EditSectorComponent
+     },
 ];
