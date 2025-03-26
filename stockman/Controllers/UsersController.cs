@@ -42,7 +42,8 @@ namespace stockman.Controllers
         [HttpPost]
         public async Task<ActionResult<UserDto>> CreateAsync(CreateUserViewModel request)
         {
-            if (await _userRepository.GetByEmailAsync(request.Email) != null)
+            var emailVerify = await _userRepository.GetByEmailAsync(request.Email);
+            if (emailVerify != null)
             {
                 return Conflict(new { message = "Esse email já foi cadastrado", type = "email", code = 409 });
             }
@@ -95,6 +96,10 @@ namespace stockman.Controllers
                 if (request.Role == 1)
                 {
                     user.Role = Enuns.Roles.USER;
+                }
+                if (request.Role == 2)
+                {
+                    user.Role = Enuns.Roles.MODERADOR;
                 }
             }
 

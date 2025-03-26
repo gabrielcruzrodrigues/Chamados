@@ -67,6 +67,7 @@ export class CreateUsersComponent {
     } else {
       this.isLoading = true;
       const user: CreateUser = this.userForm.value as CreateUser;
+      user.role = Number(user.role);
 
       this.userService.create(user).subscribe({
         next: (response: ResponseCreateUser) => {
