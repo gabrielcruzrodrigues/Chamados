@@ -9,6 +9,7 @@ public class StockmanContext : DbContext
     
     public DbSet<Users>? Users { get; set; }
     public DbSet<Sector>? Sectors { get; set; }
+    public DbSet<Call> Calls { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

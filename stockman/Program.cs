@@ -78,6 +78,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<ISectorRepository, SectorRepository>();
+builder.Services.AddScoped<ICallRepository, CallRepository>();
 
 // -------------------------- Configuring Environment variables --------------------------
 builder.Configuration.AddEnvironmentVariables();

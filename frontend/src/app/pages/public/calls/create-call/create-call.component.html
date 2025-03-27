@@ -1,0 +1,47 @@
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-main-navbar></app-main-navbar>
+<section class="main-section appear">
+     <app-top-user-infos [title]="title"></app-top-user-infos>
+
+     <section class="full-div">
+          <div class="title">
+               <i class="fa-solid fa-headset icon"></i>
+               <h2>Abrir chamado</h2>
+          </div>
+
+          <form class="main-form" [formGroup]="callForm" (ngSubmit)="submit()">
+               <label>Assunto:</label>
+               <input 
+                    type="text" 
+                    formControlName="title" 
+                    placeholder="Digite o assunto/motivo do chamado" 
+                    name="title"
+                    (input)="clearInputErrors('title')" 
+                    (change)="getTitleErrors()">
+               <app-input-error-message [errors]="titleErrors"></app-input-error-message>
+
+               <label>Setor:</label>
+               <select 
+                    id="roleSelect"
+                    formControlName="sectorId" 
+                    name="role" 
+                    class="selectRole"
+                    (input)="clearInputErrors('sector')"
+                    (change)="getSectorErrors()">
+                         <option selected disabled value="">Selecione um setor</option>
+                         <option *ngFor="let sector of sectors" [value]="sector.id">
+                              {{ sector.name }}
+                         </option>
+               </select>
+               <app-input-error-message [errors]="sectorErrors"></app-input-error-message>
+
+               <label>Descrição:</label>
+               <textarea placeholder="Digite aqui a descrição do erro ou mais detalhes sobre o motivo do chamado!"
+                         formControlName="content"
+                         (input)="clearInputErrors('content')" ></textarea>
+               <app-input-error-message [errors]="contentErrors"></app-input-error-message>
+
+               <button type="submit">Abrir chamado</button>
+          </form>
+     </section>
+</section>

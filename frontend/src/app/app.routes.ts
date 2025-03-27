@@ -12,6 +12,8 @@ import { ShowSectorsComponent } from './pages/admin/sectors/show-sectors/show-se
 import { SearchSectorsForEditComponent } from './pages/admin/sectors/search-sectors-for-edit/search-sectors-for-edit.component';
 import { SearchSectorsForTrashComponent } from './pages/admin/sectors/search-sectors-for-trash/search-sectors-for-trash.component';
 import { EditSectorComponent } from './pages/admin/sectors/edit-sector/edit-sector.component';
+import { CreateCallComponent } from './pages/public/calls/create-call/create-call.component';
+import { SuccessCallComponent } from './pages/public/calls/success-call/success-call.component';
 
 export const routes: Routes = [
      {
@@ -19,51 +21,60 @@ export const routes: Routes = [
           component: DashboardComponent
      },
      {
-          path: 'create-user',
+          path: 'admin/create-user',
           component: CreateUsersComponent
      },
      {
-          path: 'users',
+          path: 'admin/users',
           component: UsersDashboardComponent
      },
      {
-          path: 'show-users',
+          path: 'admin/show-users',
           component: ShowUsersComponent
      },
      {
-          path: 'users/show-results/edit',
+          path: 'admin/users/show-results/edit',
           component: SearchUsersForEditComponent
      },
      {
-          path: 'users/show-results/trash',
+          path: 'admin/users/show-results/trash',
           component: SearchUsersForDeleteComponent
      },
      {
-          path: 'users/edit/:userId',
+          path: 'admin/users/edit/:userId',
           component: EditUserComponent
      },
      {
-          path: 'sectors',
+          path: 'admin/sectors',
           component: SectorsDashboardComponent
      },
      {
-          path: 'create-sector',
+          path: 'admin/create-sector',
           component: CreateSectorsComponent
      },
      {
-          path: 'show-sectors',
+          path: 'admin/show-sectors',
           component: ShowSectorsComponent
      },
      {
-          path: 'sectors/show-results/edit',
+          path: 'admin/sectors/show-results/edit',
           component: SearchSectorsForEditComponent
      },
      {
-          path: 'sectors/show-results/trash',
+          path: 'admin/sectors/show-results/trash',
           component: SearchSectorsForTrashComponent
      },
      {
-          path: 'sectors/edit/:sectorId',
+          path: 'admin/sectors/edit/:sectorId',
           component: EditSectorComponent
      },
+
+     {
+          path: 'call/open',
+          component: CreateCallComponent
+     },
+     {
+          path: 'call/success',
+          component: SuccessCallComponent
+     }
 ];
