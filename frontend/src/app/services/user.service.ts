@@ -48,7 +48,7 @@ export class UserService {
   }
 
   update(user: UpdateUser): Observable<HttpResponse<any>> {
-    const urlForRequest = this.url + `/${user.id}`;
+    const urlForRequest = this.url;
     return this.http.put(urlForRequest, user, { observe: 'response' });
   }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using stockman.Database;
@@ -11,9 +12,11 @@ using stockman.Database;
 namespace stockman.Migrations
 {
     [DbContext(typeof(StockmanContext))]
-    partial class StockmanContextModelSnapshot : ModelSnapshot
+    [Migration("20250327141525_AddAttendedByInCallMigration")]
+    partial class AddAttendedByInCallMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +35,6 @@ namespace stockman.Migrations
 
                     b.Property<long?>("AttendedById")
                         .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("AttendedTime")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -65,29 +65,6 @@ namespace stockman.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Calls");
-                });
-
-            modelBuilder.Entity("stockman.Models.Salt", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("SaltHash")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Salts");
                 });
 
             modelBuilder.Entity("stockman.Models.Sector", b =>
@@ -150,12 +127,6 @@ namespace stockman.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("RefreshTokenExpiryTime")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
@@ -194,17 +165,6 @@ namespace stockman.Migrations
                     b.Navigation("AttendedBy");
 
                     b.Navigation("Sector");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("stockman.Models.Salt", b =>
-                {
-                    b.HasOne("stockman.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("User");
                 });

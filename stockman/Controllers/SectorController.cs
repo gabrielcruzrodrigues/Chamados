@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using stockman.Models;
 using stockman.Repositories;
@@ -19,6 +20,7 @@ public class SectorController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(policy: "admin")]
     public async Task<ActionResult<Sector>> CreateAsync(CreateSectorViewModel request)
     {
         var sectorNameVerify = await _repository.GetByNameAsync(request.Name);
@@ -31,12 +33,14 @@ public class SectorController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(policy: "moderador")]
     public async Task<ActionResult<IEnumerable<Sector>>> GetAllAsync()
     {
         return Ok(await _repository.GetAllAsync());
     }
 
     [HttpGet("{sectorId:int}")]
+    [Authorize(policy: "moderador")]
     public async Task<ActionResult<Sector>> GetById(int sectorId)
     {
         if (sectorId <= 0)
@@ -48,6 +52,7 @@ public class SectorController : ControllerBase
     }
 
     [HttpDelete("{sectorId:int}")]
+    [Authorize(policy: "admin")]
     public async Task<IActionResult> Delete(int sectorId)
     {
         if (sectorId <= 0)
@@ -62,6 +67,7 @@ public class SectorController : ControllerBase
     }
 
     [HttpPut("{sectorId:int}")]
+    [Authorize(policy: "admin")]
     public async Task<IActionResult> Update(int sectorId, UpdateSectorViewModel request)
     {
         if (sectorId <= 0)
@@ -77,6 +83,7 @@ public class SectorController : ControllerBase
     }
 
     [HttpGet("search/{param}")]
+    [Authorize(policy: "moderador")]
     public async Task<ActionResult> Search(string param)
     {
         var sectors = await _repository.Search(param);

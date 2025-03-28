@@ -1,5 +1,10 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using stockman.Database;
 using stockman.Extensions;
@@ -8,6 +13,7 @@ using stockman.Repositories.Interfaces;
 using stockman.Services;
 using stockman.Services.Interfaces;
 using System.Reflection;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,12 +43,16 @@ builder.Services.AddEndpointsApiExplorer();
 //----------------------------- Config Swagger -----------------------------
 builder.Services.AddSwaggerGen(c =>
 {
-    c.AddSecurityDefinition("cookie", new OpenApiSecurityScheme
+    c.SwaggerDoc("v1", new OpenApiInfo() { Title = "aplicatalogo", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
-        In = ParameterLocation.Cookie,
-        Name = "your-auth-cookie-name",
+        Name = "Authorization",
         Type = SecuritySchemeType.ApiKey,
-        Scheme = "cookie"
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Bearer JWT ",
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -53,13 +63,79 @@ builder.Services.AddSwaggerGen(c =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "cookie"
+                    Id = "Bearer"
                 }
             },
-            new string[] {}
+            new string[]{}
         }
     });
 });
+
+// -------------------- Autentica��o e autoriza��o ---------------------
+var secretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY");
+var issuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+var audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+
+if (string.IsNullOrEmpty(secretKey) || string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(audience))
+{
+    throw new InvalidOperationException("Algumas variáveis de ambiente não foram configuradas corretamente.");
+}
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+            ValidIssuer = issuer,
+            ValidAudience = audience,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+
+        // // Permite a configuração de um evento para quando o token for validado
+        // options.Events = new JwtBearerEvents
+        // {
+        //     OnAuthenticationFailed = context =>
+        //     {
+        //         // Se falhar a autenticação, você pode logar a falha ou fazer algo
+        //         Console.WriteLine("Falha na autenticação: " + context.Exception.Message);
+        //         return Task.CompletedTask;
+        //     },
+        //     OnTokenValidated = context =>
+        //     {
+        //         // Se o token for validado, você pode fazer algo, como logar ou adicionar dados ao contexto
+        //         Console.WriteLine("Token validado!");
+        //         return Task.CompletedTask;
+        //     }
+        // };
+    });
+
+// Adiciona a autorização
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("admin", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim("Role", "admin") &&
+            context.User.HasClaim("Role", "moderador") &&
+            context.User.HasClaim("Role", "user")));
+
+    options.AddPolicy("moderador", policy =>
+        policy.RequireAssertion(context =>
+            context.User.HasClaim("Role", "moderador") &&
+            context.User.HasClaim("Role", "user")));
+
+    options.AddPolicy("user", policy => policy.RequireClaim("Role", "user"));
+});
+
+// Adicionando políticas globais
+builder.Services.AddMvc(config =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+}).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 //----------------------------- Cors -----------------------------
 var OriginsWithAllowedAccess = "OriginsWithAllowedAccess";
@@ -76,9 +152,12 @@ builder.Services.AddCors(options =>
 );
 // ----------------------- Inject container ------------------------------
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<ISectorRepository, SectorRepository>();
 builder.Services.AddScoped<ICallRepository, CallRepository>();
+builder.Services.AddScoped<ISaltRepository, SaltRepository>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // -------------------------- Configuring Environment variables --------------------------
 builder.Configuration.AddEnvironmentVariables();

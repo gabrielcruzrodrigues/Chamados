@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using stockman.Models;
 using stockman.Models.Dtos;
@@ -26,6 +27,7 @@ namespace stockman.Controllers
         }
 
         [HttpPost]
+        [Authorize(policy: "user")]
         public async Task<ActionResult<Call>> Create(CreateCallViewModel request)
         {
             _ = await _userRepository.GetByIdAsync(request.UserId);
@@ -37,12 +39,14 @@ namespace stockman.Controllers
         }
 
         [HttpGet]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult<IEnumerable<CallDto>>> GetAll()
         {
             return Ok(await _callRepository.GetAllAsync());
         }
 
         [HttpGet("{callId:long}")]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult<Call>> GetById(long callId)
         {
             if (callId <= 0)
@@ -67,6 +71,7 @@ namespace stockman.Controllers
         //}
 
         [HttpGet("user/{userId:long}")]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult<IEnumerable<Call>>> GetByUserId(long userId)
         {
             if (userId <= 0)
@@ -78,6 +83,7 @@ namespace stockman.Controllers
         }
 
         [HttpGet("sector/{sectorId:int}")]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult<IEnumerable<Call>>> GetBysectorId(int sectorId)
         {
             if (sectorId <= 0)

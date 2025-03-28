@@ -26,6 +26,8 @@ public sealed class Users
 
     [Required]
     public required bool Status { get; set; }
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiryTime { get; set; }
 
     [Required]
     public required DateTime CreatedAt { get; set; }

@@ -52,6 +52,7 @@ public class CallRepository : ICallRepository
     {
         return await _context.Calls
             .AsNoTracking()
+            .Where(c => c.Resolved.Equals(false))
             .Include(c => c.Sector)
             .Select(c => new CallDto
             {
@@ -59,6 +60,10 @@ public class CallRepository : ICallRepository
                 Title = c.Title,
                 Content = c.Content,
                 CreatedAt = c.CreatedAt,
+                AttendedByName = c.AttendedBy.Name,
+                AttendedTime = c.AttendedTime.ToString(),
+                SectorName = c.Sector.Name,
+                UserName = c.User.Name,
                 Resolved = c.Resolved,
                 Sector = c.Sector,
                 User = new UserDto

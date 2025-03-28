@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using stockman.Extensions;
 using stockman.Models;
 using stockman.Models.Dtos;
 using stockman.Repositories.Interfaces;
@@ -15,16 +17,16 @@ namespace stockman.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersRepository _userRepository;
-        private readonly IPasswordService _passwordService;
+        private readonly ISaltRepository _saltRepository;
 
-        public UsersController(IUsersRepository userRepository, IPasswordService passwordService)
+        public UsersController(IUsersRepository userRepository, ISaltRepository saltRepository)
         {
             _userRepository = userRepository;
-            _passwordService = passwordService;
+            _saltRepository = saltRepository;
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetAllAsync()
         {
             var response = await _userRepository.GetAllUsersAsync();
@@ -32,7 +34,7 @@ namespace stockman.Controllers
         }
 
         [HttpGet("{userId:long}")]
-        //[Authorize]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult<UserDto>> GetByIdAsync(long userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
@@ -40,6 +42,7 @@ namespace stockman.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<UserDto>> CreateAsync(CreateUserViewModel request)
         {
             var emailVerify = await _userRepository.GetByEmailAsync(request.Email);
@@ -53,28 +56,39 @@ namespace stockman.Controllers
                 return Conflict(new { message = "Esse nome já foi cadastrado", type = "name", code = 409 });
             }
 
-            var passwordHashed = _passwordService.HashPassword(request.Password);
-
-            var user = new Users 
+            var user = new Users
             {
                 Name = request.Name,
                 Email = request.Email,
                 Role = request.Role,
                 CreatedAt = DateTime.UtcNow,
                 LastUpdatedAt = DateTime.UtcNow,
-                Password = passwordHashed,
+                Password = "passwordHashed",
                 LastAccess = DateTime.UtcNow,
                 Status = true
             };
 
+            var (hash, salt) = PasswordHashManager.HashGenerate(request.Password);
+            user.Password = hash;
+
             var response = await _userRepository.CreateAsync(user);
+
+            var saltObj = new Salt()
+            {
+                UserId = user.Id,
+                SaltHash = salt
+            };
+
+            await _saltRepository.Create(saltObj);
+
             return StatusCode(201, response);
         }
 
-        [HttpPut("{userId:long}")]
-        public async Task<IActionResult> UpdateAsync(long userId, UpdateUserViewModel request)
+        [HttpPut]
+        [Authorize(policy: "admin")]
+        public async Task<IActionResult> UpdateAsync(UpdateUserViewModel request)
         {
-            var user = await _userRepository.GetByIdWithTrackingAsync(userId);
+            var user = await _userRepository.GetByIdWithTrackingAsync(request.Id);
             var emailVerify = await _userRepository.GetByEmailAsync(request.Email);
             var nameVerify = await _userRepository.GetByNameAsync(request.Name);
 
@@ -105,16 +119,21 @@ namespace stockman.Controllers
 
             user.LastUpdatedAt = DateTime.UtcNow;
 
-            if (!request.Password.IsNullOrEmpty()) {
-                var passwordHashed = _passwordService.HashPassword(request.Password);
-                user.Password = passwordHashed;
-            }
+            if (!request.Password.IsNullOrEmpty())
+            {
+                var salt = await _saltRepository.GetByUserId(user.Id);
+                var (hash, saltHash) = PasswordHashManager.HashGenerate(request.Password);
+                user.Password = hash;
 
-            await _userRepository.Update(user);
+                await _userRepository.Update(user);
+                await _saltRepository.Update(user.Id, saltHash);
+
+            }
             return StatusCode(204);
         }
 
         [HttpDelete("{userId:long}")]
+        [Authorize(policy: "admin")]
         public async Task<IActionResult> DisableAsync(long userId)
         {
             await _userRepository.Disable(userId);
@@ -122,6 +141,7 @@ namespace stockman.Controllers
         }
 
         [HttpGet("search/{param}")]
+        [Authorize(policy: "moderador")]
         public async Task<ActionResult> Search(string param)
         {
             var users = await _userRepository.Search(param);

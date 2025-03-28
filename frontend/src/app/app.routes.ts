@@ -14,6 +14,7 @@ import { SearchSectorsForTrashComponent } from './pages/admin/sectors/search-sec
 import { EditSectorComponent } from './pages/admin/sectors/edit-sector/edit-sector.component';
 import { CreateCallComponent } from './pages/public/calls/create-call/create-call.component';
 import { SuccessCallComponent } from './pages/public/calls/success-call/success-call.component';
+import { ShowCallsComponent } from './pages/admin/calls/show-calls/show-calls.component';
 
 export const routes: Routes = [
      {
@@ -76,5 +77,9 @@ export const routes: Routes = [
      {
           path: 'call/success',
           component: SuccessCallComponent
+     },
+     {
+          path: 'admin/call',
+          component: ShowCallsComponent
      }
 ];

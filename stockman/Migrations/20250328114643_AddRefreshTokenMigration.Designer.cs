@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using stockman.Database;
@@ -11,9 +12,11 @@ using stockman.Database;
 namespace stockman.Migrations
 {
     [DbContext(typeof(StockmanContext))]
-    partial class StockmanContextModelSnapshot : ModelSnapshot
+    [Migration("20250328114643_AddRefreshTokenMigration")]
+    partial class AddRefreshTokenMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -20,8 +20,13 @@ public class Call
     public int SectorId { get; set; }
     [Required]
     public bool Resolved { get; set; } = false;
+    [ForeignKey("AttendedBy")]
+    public long? AttendedById { get; set; }
+    public DateTime? AttendedTime { get; set; }
 
     [ForeignKey("UserId")]
     public Users User { get; set; }
+    [ForeignKey("SectorId")]
     public Sector Sector { get; set; }
+    public Users AttendedBy { get; set; }
 }

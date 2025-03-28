@@ -8,6 +8,7 @@ public class StockmanContext : DbContext
     public StockmanContext(DbContextOptions<StockmanContext> options) : base(options) {}
     
     public DbSet<Users>? Users { get; set; }
+    public DbSet<Salt> Salts { get; set; }
     public DbSet<Sector>? Sectors { get; set; }
     public DbSet<Call> Calls { get; set; }
 

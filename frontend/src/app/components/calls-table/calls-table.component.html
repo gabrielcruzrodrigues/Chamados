@@ -1,0 +1,24 @@
+<table class="custom-table">
+     <thead>
+          <tr>
+               <th>Assunto</th>
+               <th>Setor</th>
+               <th>Solicitante</th>
+               <th>data</th>
+               <th>Ações</th>
+          </tr>
+     </thead>
+     <tbody>
+          <tr *ngFor="let call of calls">
+               <td>{{call.title}}</td>
+               <td>{{call.sectorName}}</td>
+               <td>{{call.userName}}</td>
+               <td>{{call.createdAt}}</td>
+               <th class="actions">
+                    <button (click)="openModal(call.id)" class="switch action"><i class="fa-solid fa-repeat"></i></button>
+                    <button (click)="openModal(call.id)" class="check action"><i class="fa-solid fa-check-to-slot"></i></button>
+               </th>
+          </tr>
+     </tbody>
+</table>
+<app-spinning [isLoading]="isLoading"></app-spinning>

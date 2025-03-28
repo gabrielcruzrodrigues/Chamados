@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using stockman.Repositories.Interfaces;
 using stockman.Services.Interfaces;
 using stockman.ViewModels;
@@ -9,45 +10,25 @@ namespace stockman.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IPasswordService _passwordService;
         private readonly IUsersRepository _userRepository;
+        private readonly IAuthService _authService;
 
-        public AuthController(IPasswordService passwordService, IUsersRepository usersRepository)
+        public AuthController(IUsersRepository usersRepository, IAuthService authService)
         {
-            _passwordService = passwordService;
             _userRepository = usersRepository;
+            _authService = authService;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequestViewModel request)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel request)
         {
-            var user = await _userRepository.GetByEmailAsync(request.Email);
-
-            if (_passwordService.VerifyPassword(user.Password, request.Password))
-            {
-                HttpContext.Session.SetString("Email", user.Email);
-                HttpContext.Session.SetString("Role", user.Role.ToString());
-                return Ok(new { message = "Login realizado com sucesso!" });
-            } 
-            else
-            {
-                return BadRequest("Credenciais incorretas!");
-            }
-
-        }
-
-        [HttpGet("session")]
-        public async Task<ActionResult> CheckSession()
-        {
-            var user = HttpContext.Session.GetString("Email");
-
-            if (string.IsNullOrEmpty(user))
-                return Unauthorized(new { message = "Sessão expirada ou inexistente!" });
-
-            return Ok(new { message = "Usuário authenticado!", user });
+            var credentials = await _authService.LoginAsync(request);
+            return Ok(credentials);
         }
 
         [HttpPost("logout")]
+        [Authorize(policy: "user")]
         public async Task<ActionResult> Logout()
         {
             HttpContext.Session.Clear();
