@@ -100,9 +100,13 @@ export class EditUserComponent implements OnInit{
 
       this.userService.update(user).subscribe({
         next: (response: HttpResponse<any>) => {
-          this.toastr.success(`O usuário foi atualizado com sucesso!`);
-          this.router.navigate(['/users']);
-          this.isLoading = false;
+          if (response.status === 204) {
+            this.toastr.success(`O usuário foi atualizado com sucesso!`);
+            this.router.navigate(['/admin/show-users']);
+            this.isLoading = false;
+          } else {
+            this.toastr.info("Uma resposta inesperada foi recebida do servidor, contate um administrador do sistema!")
+          }
         },
         error: (error: ErrorResponseCreateUser) => {
           console.log(error);

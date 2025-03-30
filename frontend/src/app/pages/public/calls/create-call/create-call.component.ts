@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { HttpResponse } from '@angular/common/http';
 import { SectorService } from './../../../../services/sector.service';
 import { CreateCall } from '../../../../types/Call';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-create-call',
@@ -45,17 +46,23 @@ export class CreateCallComponent implements OnInit {
     private sectorService: SectorService,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) {
     this.callForm = this.fb.group({
       title: ['', [Validators.required, nameValidators()]],
       content: ['', Validators.required],
-      userId: [10, Validators.required],
+      userId: ['', Validators.required],
       sectorId: ['', Validators.required]
     })
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    var userId = await this.authService.getId();
+    this.callForm.patchValue({
+      userId: userId
+    })
+
     this.sectorService.getAll().subscribe({
       next: (response: HttpResponse<Sector[]>) => {
         if (response.body) {

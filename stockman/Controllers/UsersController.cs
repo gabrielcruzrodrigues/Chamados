@@ -124,11 +124,15 @@ namespace stockman.Controllers
                 var salt = await _saltRepository.GetByUserId(user.Id);
                 var (hash, saltHash) = PasswordHashManager.HashGenerate(request.Password);
                 user.Password = hash;
-
-                await _userRepository.Update(user);
                 await _saltRepository.Update(user.Id, saltHash);
-
+                await _userRepository.Update(user);
+            } 
+            else
+            {
+                await _userRepository.Update(user);
             }
+
+
             return StatusCode(204);
         }
 

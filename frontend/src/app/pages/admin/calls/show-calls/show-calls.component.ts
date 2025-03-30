@@ -8,22 +8,24 @@ import { ToastrService } from 'ngx-toastr';
 import { CallTable } from '../../../../types/Call';
 import { HttpResponse } from '@angular/common/http';
 import { formatDate } from '../../../../utils/FormatData';
+import { SpinningComponent } from "../../../../components/spinning/spinning.component";
 
 @Component({
   selector: 'app-show-calls',
   standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, CallsTableComponent],
-templateUrl: './show-calls.component.html',
+  imports: [MainNavbarComponent, TopUserInfosComponent, CallsTableComponent, SpinningComponent],
+  templateUrl: './show-calls.component.html',
   styleUrl: './show-calls.component.sass'
 })
 export class ShowCallsComponent implements OnInit {
   title: string = 'Chamados';
   calls: CallTable[] = [];
+  isLoading: boolean = true;
 
   constructor(
     private callService: CallService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -33,9 +35,15 @@ export class ShowCallsComponent implements OnInit {
           call.createdAt = formatDate(call.createdAt); 
           return call;
         });
+        this.isLoading = false;
       },
       error: (error) => {
-
+        if (error.status === 500) {
+          this.toastr.error("Houve um erro ao tentar buscar seus chamados, procure um administrador do sistema!");
+          this.isLoading = false;
+          this.router.navigate(['/call/open']);
+        }
+        this.isLoading = false;
       }
 
     })

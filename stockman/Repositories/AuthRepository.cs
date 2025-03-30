@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using stockman.Database;
 using stockman.Enuns;
 using stockman.Extensions;
-
+using stockman.Models;
 using stockman.Models.Dtos;
 using stockman.Repositories.Interfaces;
 using stockman.Services.Interfaces;
@@ -131,7 +131,9 @@ public class AuthRepository : IAuthRepository
             UserId = user.Id,
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             RefreshToken = refreshToken,
-            Expiration = token.ValidTo
+            Expiration = token.ValidTo,
+            Role = userRole,
+            Name = user.Name
         };
     }
 }

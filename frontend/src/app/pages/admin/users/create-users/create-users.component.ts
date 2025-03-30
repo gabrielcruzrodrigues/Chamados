@@ -72,7 +72,7 @@ export class CreateUsersComponent {
       this.userService.create(user).subscribe({
         next: (response: ResponseCreateUser) => {
           this.toastr.success(`O usuário ${response.name} foi criado com sucesso!`);
-          this.router.navigate(['/users']);
+          this.router.navigate(['/admin/users']);
           this.isLoading = false;
         },
         error: (error: ErrorResponseCreateUser) => {

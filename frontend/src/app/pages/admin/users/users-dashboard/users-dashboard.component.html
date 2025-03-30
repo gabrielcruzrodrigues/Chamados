@@ -20,7 +20,7 @@
                </div>
                <p class="option-title">Atualizar</p>
           </div>
-          <div class="option" [routerLink]="['/admin/users/show-results/trash']">
+          <div *ngIf="userRole === 0" class="option" [routerLink]="['/admin/users/show-results/trash']">
                <div class="icon-div red">
                     <i class="fa-solid fa-trash icon"></i>
                </div>

@@ -15,6 +15,8 @@ import { EditSectorComponent } from './pages/admin/sectors/edit-sector/edit-sect
 import { CreateCallComponent } from './pages/public/calls/create-call/create-call.component';
 import { SuccessCallComponent } from './pages/public/calls/success-call/success-call.component';
 import { ShowCallsComponent } from './pages/admin/calls/show-calls/show-calls.component';
+import { LoginComponent } from './pages/public/login/login.component';
+import { ListMyCallsComponent } from './pages/public/calls/list-my-calls/list-my-calls.component';
 
 export const routes: Routes = [
      {
@@ -81,5 +83,13 @@ export const routes: Routes = [
      {
           path: 'admin/call',
           component: ShowCallsComponent
+     },
+     {
+          path: 'login',
+          component: LoginComponent
+     },
+     {
+          path: 'call/my',
+          component: ListMyCallsComponent
      }
 ];

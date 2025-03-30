@@ -1,4 +1,5 @@
-﻿using stockman.Models.Dtos;
+﻿using stockman.Models;
+using stockman.Models.Dtos;
 using stockman.ViewModels;
 
 namespace stockman.Repositories.Interfaces

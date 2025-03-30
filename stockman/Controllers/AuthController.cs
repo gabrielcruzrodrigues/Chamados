@@ -31,7 +31,6 @@ namespace stockman.Controllers
         [Authorize(policy: "user")]
         public async Task<ActionResult> Logout()
         {
-            HttpContext.Session.Clear();
             return Ok(new { message = "Logout realizado com sucesso!" });
         }
     }

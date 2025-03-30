@@ -33,7 +33,7 @@ public class SectorController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(policy: "moderador")]
+    [Authorize(policy: "user")]
     public async Task<ActionResult<IEnumerable<Sector>>> GetAllAsync()
     {
         return Ok(await _repository.GetAllAsync());

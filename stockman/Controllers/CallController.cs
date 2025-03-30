@@ -71,8 +71,8 @@ namespace stockman.Controllers
         //}
 
         [HttpGet("user/{userId:long}")]
-        [Authorize(policy: "moderador")]
-        public async Task<ActionResult<IEnumerable<Call>>> GetByUserId(long userId)
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<CallDto>>> GetByUserId(long userId)
         {
             if (userId <= 0)
             {
@@ -93,6 +93,22 @@ namespace stockman.Controllers
 
             return Ok(await _callRepository.GetBySectorIdAsync(sectorId));
         }
+
+        [HttpPut("resolved/{callId:int}/{userId:int}")]
+        [Authorize(policy: "moderador")]
+        public async Task<IActionResult> Resolved(int callId, int userId)
+        {
+            var call = await _callRepository.GetByIdAsync(callId);
+            var user = await _userRepository.GetByIdAsync(userId);
+
+            call.AttendedById = user.Id;
+            call.AttendedTime = DateTime.UtcNow;
+            call.Resolved = true;
+
+            await _callRepository.UpdateAsync(call);
+            return NoContent();
+        }
+
     }
 }
 

@@ -15,8 +15,8 @@
                <td>{{call.userName}}</td>
                <td>{{call.createdAt}}</td>
                <th class="actions">
-                    <button (click)="openModal(call.id)" class="switch action"><i class="fa-solid fa-repeat"></i></button>
-                    <button (click)="openModal(call.id)" class="check action"><i class="fa-solid fa-check-to-slot"></i></button>
+                    <button *ngIf="userRole === 0" (click)="openModal(call.id, 'switch')" class="switch action"><i class="fa-solid fa-repeat"></i></button>
+                    <button (click)="openModal(call.id, 'resolved')" class="check action"><i class="fa-solid fa-check-to-slot"></i></button>
                </th>
           </tr>
      </tbody>

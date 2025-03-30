@@ -54,6 +54,7 @@ public class CallRepository : ICallRepository
             .AsNoTracking()
             .Where(c => c.Resolved.Equals(false))
             .Include(c => c.Sector)
+            .Include(u => u.User)
             .Select(c => new CallDto
             {
                 Id = c.Id,
@@ -83,7 +84,6 @@ public class CallRepository : ICallRepository
     public async Task<Call> GetByIdAsync(long callId)
     {
         var call = await _context.Calls
-            .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == callId);
 
         if (call is null)
@@ -108,11 +108,26 @@ public class CallRepository : ICallRepository
         }
     }
 
-    public async Task<IEnumerable<Call>> GetByUserIdAsync(long userId)
+    public async Task<IEnumerable<CallDto>> GetByUserIdAsync(long userId)
     {
         return await _context.Calls
             .AsNoTracking()
             .Where(c => c.UserId.Equals(userId))
+            .Include(c => c.Sector)
+            .Include(u => u.User)
+            .Select(c => new CallDto
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Content = c.Content,
+                CreatedAt = c.CreatedAt,
+                AttendedByName = c.AttendedBy.Name,
+                AttendedTime = c.AttendedTime.ToString(),
+                SectorName = c.Sector.Name,
+                UserName = c.User.Name,
+                Resolved = c.Resolved,
+                Sector = c.Sector
+            })
             .ToListAsync();
     }
 
