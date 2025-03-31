@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CallTable } from '../../types/Call';
 import { SpinningComponent } from "../spinning/spinning.component";
 import { AuthService } from '../../services/auth.service';
@@ -7,6 +7,7 @@ import { CallService } from '../../services/call.service';
 import { HttpResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ContentCallModalComponent } from "../content-call-modal/content-call-modal.component";
 
 @Component({
   selector: 'app-calls-table',
@@ -14,15 +15,19 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     SpinningComponent,
-  ],
+    ContentCallModalComponent
+],
   templateUrl: './calls-table.component.html',
   styleUrl: './calls-table.component.sass'
 })
 export class CallsTableComponent implements OnInit {
   @Input() calls: CallTable[] = [];
+
   isLoading: boolean = false;
   userRole: number = 1;
   userId: string = '0';
+  contentModalOpen: boolean = false;
+  contentModal: string = '';
 
   constructor(
     private authService: AuthService,
@@ -57,4 +62,13 @@ export class CallsTableComponent implements OnInit {
       })
     }
   } 
+
+  openContent(message: string): void {
+    this.contentModalOpen = true;
+    this.contentModal = message;
+  }
+
+  confirm(confirm: boolean): void {
+    this.contentModalOpen = false;
+  }
 }

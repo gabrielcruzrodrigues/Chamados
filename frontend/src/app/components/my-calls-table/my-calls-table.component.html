@@ -10,7 +10,7 @@
           </tr>
      </thead>
      <tbody>
-          <tr *ngFor="let call of calls">
+          <tr *ngFor="let call of calls" (click)="openContent(call.content)">
                <td>{{ call.title }}</td>
                <td>{{ call.sectorName }}</td>
                <td>{{ call.createdAt }}</td>
@@ -21,3 +21,8 @@
      </tbody>
 </table>
 <app-spinning [isLoading]="isLoading"></app-spinning>
+<app-content-call-modal 
+     [message]="contentModal" 
+     *ngIf="contentModalOpen"
+     (confirm)="confirm($event)"
+></app-content-call-modal>
