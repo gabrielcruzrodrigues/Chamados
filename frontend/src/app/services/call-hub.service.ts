@@ -19,7 +19,7 @@ export class CallHubService implements OnInit {
   ngOnInit(): void {
     // Cria a conexão com o servidor SignalR
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5171/callHub', {
+      .withUrl('http://192.168.1.65:5171/callHub', {
         transport: signalR.HttpTransportType.WebSockets,
         withCredentials: true  // Permite o envio de cookies ou credenciais
       }) // URL do seu backend
