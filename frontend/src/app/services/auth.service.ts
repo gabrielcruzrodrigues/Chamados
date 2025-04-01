@@ -48,35 +48,35 @@ export class AuthService {
     this.cookieService.set('refreshToken', body.refreshToken, {
       path: '/', 
       secure: false, // Trocar para true em prod
-      sameSite: 'None', 
+      sameSite: 'Lax', 
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('expiration', body.expiration, {
       path: '/', 
       secure: false, // Trocar para true em prod
-      sameSite: 'None', 
+      sameSite: 'Lax', 
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('role', body.role, {
       path: '/', 
       secure: false, // Trocar para true em prod
-      sameSite: 'None', 
+      sameSite: 'Lax', 
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('name', body.name, {
       path: '/', 
       secure: false, // Trocar para true em prod
-      sameSite: 'None', 
+      sameSite: 'Lax', 
       expires: 1 // Alterar em prod
     });
 
     this.cookieService.set('userId', body.userId, {
       path: '/', 
       secure: false, // Trocar para true em prod
-      sameSite: 'None', 
+      sameSite: 'Lax', 
       expires: 1 // Alterar em prod
     });
   }
