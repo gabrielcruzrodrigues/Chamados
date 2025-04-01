@@ -42,7 +42,7 @@ export class AuthService {
     this.cookieService.set('token', body.token, {
       path: '/', 
       secure: false, // Trocar para true em prod
-      sameSite: 'None', 
+      sameSite: 'Lax', 
       expires: 1 // Alterar em prod
     });
 
