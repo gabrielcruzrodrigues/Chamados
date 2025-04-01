@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 import { ContentCallModalComponent } from "../content-call-modal/content-call-modal.component";
 
 @Component({
-    selector: 'app-calls-table',
-    imports: [
-        CommonModule,
-        SpinningComponent,
-        ContentCallModalComponent
-    ],
-    templateUrl: './calls-table.component.html',
-    styleUrl: './calls-table.component.sass'
+  selector: 'app-calls-table',
+  imports: [
+    CommonModule,
+    SpinningComponent,
+    ContentCallModalComponent
+  ],
+  templateUrl: './calls-table.component.html',
+  styleUrl: './calls-table.component.sass'
 })
 export class CallsTableComponent implements OnInit {
   @Input() calls: CallTable[] = [];
@@ -60,7 +60,7 @@ export class CallsTableComponent implements OnInit {
         }
       })
     }
-  } 
+  }
 
   openContent(message: string): void {
     this.contentModalOpen = true;

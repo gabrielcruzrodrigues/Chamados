@@ -31,9 +31,27 @@ export class ShowCallsComponent implements OnInit {
     this.callService.getAll().subscribe({
       next: (response: HttpResponse<CallTable[]>) => {
         this.calls = (response.body ?? []).map(call => {
-          call.createdAt = formatDate(call.createdAt); 
-          return call;
+          return call; 
         });
+        
+        // Ordenando por ordem decrescente de criação
+        this.calls.sort((a, b) => {
+          const dateA = new Date(a.createdAt).getTime(); 
+          const dateB = new Date(b.createdAt).getTime();
+          
+         
+          if (isNaN(dateA) || isNaN(dateB)) {
+            console.error('Data inválida encontrada:', a.createdAt, b.createdAt);
+            return 0; 
+          }
+          
+          return dateB - dateA; 
+        });
+
+        this.calls.forEach(call => {
+          call.createdAt = formatDate(call.createdAt); 
+        })
+        
         this.isLoading = false;
       },
       error: (error) => {

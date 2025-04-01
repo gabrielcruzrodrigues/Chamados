@@ -12,10 +12,10 @@ import { formatDate } from '../../../../utils/FormatData';
 import { AuthService } from '../../../../services/auth.service';
 
 @Component({
-    selector: 'app-list-my-calls',
-    imports: [MainNavbarComponent, TopUserInfosComponent, MyCallsTableComponent, SpinningComponent],
-    templateUrl: './list-my-calls.component.html',
-    styleUrl: './list-my-calls.component.sass'
+  selector: 'app-list-my-calls',
+  imports: [MainNavbarComponent, TopUserInfosComponent, MyCallsTableComponent, SpinningComponent],
+  templateUrl: './list-my-calls.component.html',
+  styleUrl: './list-my-calls.component.sass'
 })
 export class ListMyCallsComponent implements OnInit {
   title: string = 'Meus chamados';
@@ -34,10 +34,21 @@ export class ListMyCallsComponent implements OnInit {
     const userId = await this.authService.getId();
     this.callService.getByUserId(userId).subscribe({
       next: (response: HttpResponse<MyCallTable[]>) => {
-        console.log(response.body)
         if (response.body?.length === 0)
           this.toastr.info("Você nunca abriu um chamado!");
 
+        this.calls = response.body ?? [];
+
+        this.calls.sort((a, b) => {
+          console.log('Comparando:', a.createdAt, b.createdAt); // Verifique o que está sendo comparado
+          const dateA = new Date(a.createdAt).getTime();
+          const dateB = new Date(b.createdAt).getTime();
+          if (isNaN(dateA) || isNaN(dateB)) {
+            console.error('Data inválida encontrada:', a.createdAt, b.createdAt);
+            return 0;
+          }
+          return dateB - dateA;
+        });
 
         this.calls = (response.body ?? []).map(call => {
           call.createdAt = formatDate(call.createdAt);
@@ -53,6 +64,7 @@ export class ListMyCallsComponent implements OnInit {
 
           return call;
         });
+
         this.isLoading = false;
       },
       error: (error) => {

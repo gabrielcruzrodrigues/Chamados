@@ -14,6 +14,7 @@ using stockman.Services;
 using stockman.Services.Interfaces;
 using System.Reflection;
 using System.Text;
+using stockman.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -144,12 +145,15 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: OriginsWithAllowedAccess,
         policy =>
         {
+            // Especifique as origens permitidas explicitamente
             policy.WithOrigins("http://localhost:4200", "http://localhost:9090")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowCredentials();
+                .AllowCredentials(); 
         })
 );
+
+builder.Services.AddSignalR();
 // ----------------------- Inject container ------------------------------
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<ISectorRepository, SectorRepository>();
@@ -178,8 +182,10 @@ builder.Services.AddDbContext<StockmanContext>(options =>
 // -------------------------- Configuring AutoMapper --------------------------
 builder.Services.AddAutoMapper(typeof(Program));
 
-
 var app = builder.Build();
+
+//----------------------------- Config Hub ------------------------------------
+app.MapHub<CallHub>("/callHub");
 
 // --------- Active the HttpResponseException middleware ------------
 app.ConfigureExceptionHandler();

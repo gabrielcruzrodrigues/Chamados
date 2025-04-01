@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using stockman.Hubs;
 using stockman.Models;
 using stockman.Models.Dtos;
 using stockman.Repositories.Interfaces;
@@ -15,15 +17,18 @@ namespace stockman.Controllers
         private readonly ICallRepository _callRepository;
         private readonly IUsersRepository _userRepository;
         private readonly ISectorRepository _sectorRepository;
+        private readonly IHubContext<CallHub> _hubContext;
         public CallController(
             ICallRepository callRepository, 
             IUsersRepository userRepository, 
-            ISectorRepository sectorRepository
+            ISectorRepository sectorRepository,
+            IHubContext<CallHub> hubContext
         )
         {
             _callRepository = callRepository;
             _userRepository = userRepository;
             _sectorRepository = sectorRepository;
+            _hubContext = hubContext;
         }
 
         [HttpPost]
@@ -35,6 +40,7 @@ namespace stockman.Controllers
 
             Call call = request.CreateCall();
             var result = await _callRepository.CreateAsync(call);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", request.Title);
             return StatusCode(201, result);
         }
 

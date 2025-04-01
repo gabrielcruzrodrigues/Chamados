@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class CallHubService implements OnInit {
 
   constructor(
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -33,9 +35,17 @@ export class CallHubService implements OnInit {
         if (userRole === 0 || userRole === 2) { //admin | moderador
           this.toastr.info("Um novo chamado foi aberto!")
           const audio = new Audio('/notification.mp3');
+
           audio.play().catch((error) => {
             console.error('Erro ao tentar reproduzir o áudio:', error);
           });
+          
+          audio.onended = () => {
+            if (this.router.url === '/call/my' || this.router.url === '/admin/call') {
+              // recarrega a página após o áudio ser reproduzido
+              window.location.reload();
+            }
+          };
         }
       });
     });
