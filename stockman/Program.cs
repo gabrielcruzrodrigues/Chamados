@@ -146,12 +146,17 @@ builder.Services.AddCors(options =>
         policy =>
         {
             // Especifique as origens permitidas explicitamente
-            policy.AllowAnyOrigin()
+            policy.WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials(); 
         })
 );
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5171); 
+});
 
 builder.Services.AddSignalR();
 // ----------------------- Inject container ------------------------------
