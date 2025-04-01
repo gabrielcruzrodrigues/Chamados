@@ -6,16 +6,15 @@ import { AuthService } from '../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-users-dashboard',
-  standalone: true,
-  imports: [
-    MainNavbarComponent, 
-    TopUserInfosComponent, 
-    RouterModule, 
-    CommonModule
-  ],
-  templateUrl: './users-dashboard.component.html',
-  styleUrl: './users-dashboard.component.sass'
+    selector: 'app-users-dashboard',
+    imports: [
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        RouterModule,
+        CommonModule
+    ],
+    templateUrl: './users-dashboard.component.html',
+    styleUrl: './users-dashboard.component.sass'
 })
 export class UsersDashboardComponent implements OnInit {
   title: string = 'Usuários';

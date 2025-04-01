@@ -9,15 +9,14 @@ import { LoginRequest } from '../../../types/Auth';
 import { SpinningComponent } from "../../../components/spinning/spinning.component";
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    SpinningComponent
-],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.sass'
+    selector: 'app-login',
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SpinningComponent
+    ],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.sass'
 })
 export class LoginComponent {
   loginForm: FormGroup;

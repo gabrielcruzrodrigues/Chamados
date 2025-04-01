@@ -6,11 +6,10 @@ import { SectorsTableComponent } from "../../../../components/sectors-table/sect
 import { Sector } from '../../../../types/Sector';
 
 @Component({
-  selector: 'app-search-sectors-for-edit',
-  standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchSectorsBoxComponent, SectorsTableComponent],
-  templateUrl: './search-sectors-for-edit.component.html',
-  styleUrl: './search-sectors-for-edit.component.sass'
+    selector: 'app-search-sectors-for-edit',
+    imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchSectorsBoxComponent, SectorsTableComponent],
+    templateUrl: './search-sectors-for-edit.component.html',
+    styleUrl: './search-sectors-for-edit.component.sass'
 })
 export class SearchSectorsForEditComponent {
   title: string = 'Setores';

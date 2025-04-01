@@ -12,17 +12,16 @@ import { HttpResponse } from '@angular/common/http';
 import { nameValidators } from '../../../../validators/nameValidator';
 
 @Component({
-  selector: 'app-create-sectors',
-  standalone: true,
-  imports: [
-    SpinningComponent,
-    MainNavbarComponent,
-    TopUserInfosComponent,
-    InputErrorMessageComponent,
-    ReactiveFormsModule
-  ],
-  templateUrl: './create-sectors.component.html',
-  styleUrl: './create-sectors.component.sass'
+    selector: 'app-create-sectors',
+    imports: [
+        SpinningComponent,
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        InputErrorMessageComponent,
+        ReactiveFormsModule
+    ],
+    templateUrl: './create-sectors.component.html',
+    styleUrl: './create-sectors.component.sass'
 })
 export class CreateSectorsComponent {
   sectorForm: FormGroup;

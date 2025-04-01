@@ -6,11 +6,10 @@ import { UsersTableComponent } from "../../../../components/users-table/users-ta
 import { User } from '../../../../types/User';
 
 @Component({
-  selector: 'app-search-users-for-edit',
-  standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchUserBoxComponent, UsersTableComponent],
-  templateUrl: './search-users-for-edit.component.html',
-  styleUrl: './search-users-for-edit.component.sass'
+    selector: 'app-search-users-for-edit',
+    imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchUserBoxComponent, UsersTableComponent],
+    templateUrl: './search-users-for-edit.component.html',
+    styleUrl: './search-users-for-edit.component.sass'
 })
 export class SearchUsersForEditComponent {
   titleUsersSearchInput: string = 'Buscar usuários para a edição';

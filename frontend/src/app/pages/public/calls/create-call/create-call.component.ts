@@ -16,18 +16,17 @@ import { CreateCall } from '../../../../types/Call';
 import { AuthService } from '../../../../services/auth.service';
 
 @Component({
-  selector: 'app-create-call',
-  standalone: true,
-  imports: [
-  SpinningComponent,
-    MainNavbarComponent,
-    TopUserInfosComponent,
-    InputErrorMessageComponent,
-    ReactiveFormsModule,
-    CommonModule
-  ],
-  templateUrl: './create-call.component.html',
-  styleUrl: './create-call.component.sass'
+    selector: 'app-create-call',
+    imports: [
+        SpinningComponent,
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        InputErrorMessageComponent,
+        ReactiveFormsModule,
+        CommonModule
+    ],
+    templateUrl: './create-call.component.html',
+    styleUrl: './create-call.component.sass'
 })
 export class CreateCallComponent implements OnInit {
   title: string = 'Chamados';

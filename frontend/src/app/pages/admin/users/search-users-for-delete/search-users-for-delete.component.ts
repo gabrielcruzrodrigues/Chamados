@@ -8,17 +8,16 @@ import { CommonModule } from '@angular/common';
 import { ModalConfirmComponent } from "../../../../components/modal-confirm/modal-confirm.component";
 
 @Component({
-  selector: 'app-search-users-for-delete',
-  standalone: true,
-  imports: [
-    MainNavbarComponent,
-    TopUserInfosComponent,
-    MainSearchUserBoxComponent,
-    UsersTableComponent,
-    CommonModule
-  ],
-  templateUrl: './search-users-for-delete.component.html',
-  styleUrl: './search-users-for-delete.component.sass'
+    selector: 'app-search-users-for-delete',
+    imports: [
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        MainSearchUserBoxComponent,
+        UsersTableComponent,
+        CommonModule
+    ],
+    templateUrl: './search-users-for-delete.component.html',
+    styleUrl: './search-users-for-delete.component.sass'
 })
 export class SearchUsersForDeleteComponent {
   titleUsersSearchInput: string = 'Buscar usuários para desativar';

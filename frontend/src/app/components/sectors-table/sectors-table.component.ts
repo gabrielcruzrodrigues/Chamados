@@ -9,15 +9,14 @@ import { SpinningComponent } from "../spinning/spinning.component";
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-sectors-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ModalConfirmComponent,
-    SpinningComponent
-],
-  templateUrl: './sectors-table.component.html',
-  styleUrl: './sectors-table.component.sass'
+    selector: 'app-sectors-table',
+    imports: [
+        CommonModule,
+        ModalConfirmComponent,
+        SpinningComponent
+    ],
+    templateUrl: './sectors-table.component.html',
+    styleUrl: './sectors-table.component.sass'
 })
 export class SectorsTableComponent {
   @Input() sectors: Sector[] = [];

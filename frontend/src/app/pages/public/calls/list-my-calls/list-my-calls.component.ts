@@ -12,11 +12,10 @@ import { formatDate } from '../../../../utils/FormatData';
 import { AuthService } from '../../../../services/auth.service';
 
 @Component({
-  selector: 'app-list-my-calls',
-  standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, MyCallsTableComponent, SpinningComponent],
-  templateUrl: './list-my-calls.component.html',
-  styleUrl: './list-my-calls.component.sass'
+    selector: 'app-list-my-calls',
+    imports: [MainNavbarComponent, TopUserInfosComponent, MyCallsTableComponent, SpinningComponent],
+    templateUrl: './list-my-calls.component.html',
+    styleUrl: './list-my-calls.component.sass'
 })
 export class ListMyCallsComponent implements OnInit {
   title: string = 'Meus chamados';

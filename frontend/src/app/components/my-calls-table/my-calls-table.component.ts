@@ -5,11 +5,10 @@ import { SpinningComponent } from "../spinning/spinning.component";
 import { ContentCallModalComponent } from "../content-call-modal/content-call-modal.component";
 
 @Component({
-  selector: 'app-my-calls-table',
-  standalone: true,
-  imports: [CommonModule, SpinningComponent, ContentCallModalComponent],
-  templateUrl: './my-calls-table.component.html',
-  styleUrl: './my-calls-table.component.sass'
+    selector: 'app-my-calls-table',
+    imports: [CommonModule, SpinningComponent, ContentCallModalComponent],
+    templateUrl: './my-calls-table.component.html',
+    styleUrl: './my-calls-table.component.sass'
 })
 export class MyCallsTableComponent {
   @Input() calls: MyCallTable[] = [];

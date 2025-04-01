@@ -7,11 +7,10 @@ import { ToastrService } from 'ngx-toastr';
 import { SpinningComponent } from "../spinning/spinning.component";
 
 @Component({
-  selector: 'app-main-search-sectors-box',
-  standalone: true,
-  imports: [SpinningComponent],
-  templateUrl: './main-search-sectors-box.component.html',
-  styleUrl: './main-search-sectors-box.component.sass'
+    selector: 'app-main-search-sectors-box',
+    imports: [SpinningComponent],
+    templateUrl: './main-search-sectors-box.component.html',
+    styleUrl: './main-search-sectors-box.component.sass'
 })
 export class MainSearchSectorsBoxComponent {
   @Input() title: string = 'Buscar setores';

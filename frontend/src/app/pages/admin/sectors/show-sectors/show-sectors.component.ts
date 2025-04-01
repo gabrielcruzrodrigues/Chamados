@@ -11,15 +11,15 @@ import { HttpResponse } from '@angular/common/http';
 import { SectorsTableComponent } from "../../../../components/sectors-table/sectors-table.component";
 
 @Component({
-  selector: 'app-show-sectors',
-  standalone: true,
-  imports: [
-    MainNavbarComponent,
-    SpinningComponent,
-    TopUserInfosComponent,
-    SectorsTableComponent],
-  templateUrl: './show-sectors.component.html',
-  styleUrl: './show-sectors.component.sass'
+    selector: 'app-show-sectors',
+    imports: [
+        MainNavbarComponent,
+        SpinningComponent,
+        TopUserInfosComponent,
+        SectorsTableComponent
+    ],
+    templateUrl: './show-sectors.component.html',
+    styleUrl: './show-sectors.component.sass'
 })
 export class ShowSectorsComponent {
   isLoading: boolean = true;

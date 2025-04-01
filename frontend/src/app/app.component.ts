@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CallHubService } from './services/call-hub.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+    selector: 'app-root',
+    imports: [RouterOutlet],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.sass'
 })
-export class AppComponent {
-  title = 'frontend';
-  constructor(private callHubService: CallHubService) {}
+export class AppComponent implements OnInit {
+  title = 'SignalR Demo';
+
+  constructor(private callHubService: CallHubService) {}  
+
+  ngOnInit(): void {
+    this.callHubService.ngOnInit(); 
+  }
 }

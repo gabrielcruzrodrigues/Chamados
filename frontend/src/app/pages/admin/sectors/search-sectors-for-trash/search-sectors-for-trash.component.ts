@@ -6,11 +6,10 @@ import { MainSearchSectorsBoxComponent } from "../../../../components/main-searc
 import { SectorsTableComponent } from "../../../../components/sectors-table/sectors-table.component";
 
 @Component({
-  selector: 'app-search-sectors-for-trash',
-  standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchSectorsBoxComponent, SectorsTableComponent],
-  templateUrl: './search-sectors-for-trash.component.html',
-  styleUrl: './search-sectors-for-trash.component.sass'
+    selector: 'app-search-sectors-for-trash',
+    imports: [MainNavbarComponent, TopUserInfosComponent, MainSearchSectorsBoxComponent, SectorsTableComponent],
+    templateUrl: './search-sectors-for-trash.component.html',
+    styleUrl: './search-sectors-for-trash.component.sass'
 })
 export class SearchSectorsForTrashComponent {
   title: string = 'Setores';

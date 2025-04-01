@@ -11,11 +11,10 @@ import { formatDate } from '../../../../utils/FormatData';
 import { SpinningComponent } from "../../../../components/spinning/spinning.component";
 
 @Component({
-  selector: 'app-show-calls',
-  standalone: true,
-  imports: [MainNavbarComponent, TopUserInfosComponent, CallsTableComponent, SpinningComponent],
-  templateUrl: './show-calls.component.html',
-  styleUrl: './show-calls.component.sass'
+    selector: 'app-show-calls',
+    imports: [MainNavbarComponent, TopUserInfosComponent, CallsTableComponent, SpinningComponent],
+    templateUrl: './show-calls.component.html',
+    styleUrl: './show-calls.component.sass'
 })
 export class ShowCallsComponent implements OnInit {
   title: string = 'Chamados';

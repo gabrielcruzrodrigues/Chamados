@@ -9,11 +9,10 @@ import { SpinningComponent } from "../spinning/spinning.component";
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-users-table',
-  standalone: true,
-  imports: [CommonModule, ModalConfirmComponent, SpinningComponent],
-  templateUrl: './users-table.component.html',
-  styleUrl: './users-table.component.sass'
+    selector: 'app-users-table',
+    imports: [CommonModule, ModalConfirmComponent, SpinningComponent],
+    templateUrl: './users-table.component.html',
+    styleUrl: './users-table.component.sass'
 })
 export class UsersTableComponent {
   @Input() users: User[] = [];

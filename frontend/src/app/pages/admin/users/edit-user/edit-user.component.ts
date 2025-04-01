@@ -15,17 +15,16 @@ import { map } from 'rxjs';
 import { response } from 'express';
 
 @Component({
-  selector: 'app-edit-user',
-  standalone: true,
-  imports: [
-    MainNavbarComponent,
-    TopUserInfosComponent,
-    InputErrorMessageComponent,
-    ReactiveFormsModule,
-    SpinningComponent
-],
-  templateUrl: './edit-user.component.html',
-  styleUrl: './edit-user.component.sass'
+    selector: 'app-edit-user',
+    imports: [
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        InputErrorMessageComponent,
+        ReactiveFormsModule,
+        SpinningComponent
+    ],
+    templateUrl: './edit-user.component.html',
+    styleUrl: './edit-user.component.sass'
 })
 export class EditUserComponent implements OnInit{
   userForm: FormGroup;

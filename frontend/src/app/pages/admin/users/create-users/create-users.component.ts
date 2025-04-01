@@ -12,17 +12,16 @@ import { CreateUser, ErrorResponseCreateUser, ResponseCreateUser } from '../../.
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-create-users',
-  standalone: true,
-  imports: [
-    MainNavbarComponent,
-    TopUserInfosComponent,
-    InputErrorMessageComponent,
-    ReactiveFormsModule,
-    SpinningComponent
-  ],
-  templateUrl: './create-users.component.html',
-  styleUrl: './create-users.component.sass'
+    selector: 'app-create-users',
+    imports: [
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        InputErrorMessageComponent,
+        ReactiveFormsModule,
+        SpinningComponent
+    ],
+    templateUrl: './create-users.component.html',
+    styleUrl: './create-users.component.sass'
 })
 export class CreateUsersComponent {
   userForm: FormGroup;

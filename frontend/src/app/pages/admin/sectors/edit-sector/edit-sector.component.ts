@@ -13,17 +13,16 @@ import { InputErrorMessageComponent } from "../../../../components/input-error-m
 import { map } from 'rxjs';
 
 @Component({
-  selector: 'app-edit-sector',
-  standalone: true,
-  imports: [
-    SpinningComponent, 
-    MainNavbarComponent, 
-    TopUserInfosComponent, 
-    InputErrorMessageComponent,
-    ReactiveFormsModule
-  ],
-  templateUrl: './edit-sector.component.html',
-  styleUrl: './edit-sector.component.sass'
+    selector: 'app-edit-sector',
+    imports: [
+        SpinningComponent,
+        MainNavbarComponent,
+        TopUserInfosComponent,
+        InputErrorMessageComponent,
+        ReactiveFormsModule
+    ],
+    templateUrl: './edit-sector.component.html',
+    styleUrl: './edit-sector.component.sass'
 })
 export class EditSectorComponent {
   sectorForm: FormGroup;

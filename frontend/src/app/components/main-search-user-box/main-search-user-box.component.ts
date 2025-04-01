@@ -7,11 +7,10 @@ import { User } from '../../types/User';
 import { SpinningComponent } from "../spinning/spinning.component";
 
 @Component({
-  selector: 'app-main-search-user-box',
-  standalone: true,
-  imports: [SpinningComponent],
-  templateUrl: './main-search-user-box.component.html',
-  styleUrl: './main-search-user-box.component.sass'
+    selector: 'app-main-search-user-box',
+    imports: [SpinningComponent],
+    templateUrl: './main-search-user-box.component.html',
+    styleUrl: './main-search-user-box.component.sass'
 })
 export class MainSearchUserBoxComponent {
   @Input() title: string = 'Buscar usuários';
