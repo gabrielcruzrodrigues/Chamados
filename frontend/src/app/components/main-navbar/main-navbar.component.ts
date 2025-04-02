@@ -30,18 +30,12 @@ export class MainNavbarComponent implements OnInit {
           switch (userRole) {
             case 0:
               this.admin = true;
-              this.moderador = true;
-              this.user = true;
               break;
             case 1:
-              this.admin = false;
-              this.moderador = false;
               this.user = true;
               break;
             case 2:
-              this.admin = false;
               this.moderador = true;
-              this.user = true;
               break;
           }
           this.isLoading = false;
