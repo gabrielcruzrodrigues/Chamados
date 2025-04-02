@@ -40,7 +40,8 @@ export class CallsTableComponent implements OnInit {
     this.userId = await this.authService.getId();
   }
 
-  openModal(id: number, option: string): void {
+  openModal(id: number, option: string, event: Event): void {
+    event.stopPropagation();
     if (option === 'resolved') {
       this.callService.resolved(id, this.userId).subscribe({
         next: (response: HttpResponse<any>) => {

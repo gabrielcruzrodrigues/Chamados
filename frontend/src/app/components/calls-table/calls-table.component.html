@@ -14,9 +14,17 @@
                <td>{{call.sectorName}}</td>
                <td>{{call.userName}}</td>
                <td>{{call.createdAt}}</td>
-               <th class="actions">
-                    <button *ngIf="userRole === 0" (click)="openModal(call.id, 'switch')" class="switch action"><i class="fa-solid fa-repeat"></i></button>
-                    <button (click)="openModal(call.id, 'resolved')" class="check action"><i class="fa-solid fa-check-to-slot"></i></button>
+               <th class="actions" >
+               <button *ngIf="userRole === 0" 
+                    (click)="openModal(call.id, 'switch', $event)" 
+                    class="switch action">
+                    <i class="fa-solid fa-repeat"></i>
+               </button>
+               <button 
+                    (click)="openModal(call.id, 'resolved', $event)" 
+                    class="check action">
+                    <i class="fa-solid fa-check-to-slot"></i>
+               </button>
                </th>
           </tr>
      </tbody>
