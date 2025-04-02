@@ -22,6 +22,11 @@ export class MainNavbarComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     console.log("user role: " + this.userRole);
+    console.log("v.admin: " + this.admin)
+    console.log("v.moderador: " + this.moderador)
+    console.log("v.user: " + this.user)
+
+
     this.userRole = await this.authService.getRole();
     switch (this.userRole) {
       case 0:
