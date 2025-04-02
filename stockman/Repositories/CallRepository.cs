@@ -131,6 +131,29 @@ public class CallRepository : ICallRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<CallDto>> GetResolvedCalls()
+    {
+        return await _context.Calls
+            .AsNoTracking()
+            .Where(c => c.Resolved.Equals(true))
+            .Include(c => c.Sector)
+            .Include(u => u.User)
+            .Select(c => new CallDto
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Content = c.Content,
+                CreatedAt = c.CreatedAt,
+                AttendedByName = c.AttendedBy.Name,
+                AttendedTime = c.AttendedTime.ToString(),
+                SectorName = c.Sector.Name,
+                UserName = c.User.Name,
+                Resolved = c.Resolved,
+                Sector = c.Sector
+            })
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<Call>> GetBySectorIdAsync(int sectorId)
     {
         return await _context.Calls

@@ -17,6 +17,7 @@ import { SuccessCallComponent } from './pages/public/calls/success-call/success-
 import { ShowCallsComponent } from './pages/admin/calls/show-calls/show-calls.component';
 import { LoginComponent } from './pages/public/login/login.component';
 import { ListMyCallsComponent } from './pages/public/calls/list-my-calls/list-my-calls.component';
+import { HistoryComponent } from './pages/admin/calls/history/history.component';
 
 export const routes: Routes = [
      {
@@ -91,5 +92,9 @@ export const routes: Routes = [
      {
           path: 'call/my',
           component: ListMyCallsComponent
+     },
+     {
+          path: 'admin/history',
+          component: HistoryComponent
      }
 ];

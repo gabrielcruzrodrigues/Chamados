@@ -45,4 +45,11 @@ export class CallService {
     const data = ['conteudo'];
     return this.http.put(urlForRequest, data, { headers: headers, observe: 'response' });
   }
+
+  getResolvedCalls(): Observable<HttpResponse<MyCallTable[]>> {
+    const accessToken = this.authService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
+    const urlForRequest = this.url + `/resolved`;
+    return this.http.get<MyCallTable[]>(urlForRequest, { headers: headers, observe: 'response' });
+  }
 }

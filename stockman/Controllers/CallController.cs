@@ -88,6 +88,13 @@ namespace stockman.Controllers
             return Ok(await _callRepository.GetByUserIdAsync(userId));
         }
 
+        [HttpGet("resolved")]
+        [Authorize(policy: "moderador")]
+        public async Task<ActionResult<IEnumerable<CallDto>>> GetResolvedCalls()
+        {
+            return Ok(await _callRepository.GetResolvedCalls());
+        }
+
         [HttpGet("sector/{sectorId:int}")]
         [Authorize(policy: "moderador")]
         public async Task<ActionResult<IEnumerable<Call>>> GetBysectorId(int sectorId)

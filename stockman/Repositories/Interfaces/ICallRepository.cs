@@ -12,5 +12,6 @@ namespace stockman.Repositories.Interfaces
         //Task DeleteAsync(Call called);
         Task<IEnumerable<CallDto>> GetByUserIdAsync(long userId);
         Task<IEnumerable<Call>> GetBySectorIdAsync(int sectorId);
+        Task<IEnumerable<CallDto>> GetResolvedCalls();
     }
 }
