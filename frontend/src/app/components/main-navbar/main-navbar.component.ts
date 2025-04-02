@@ -14,7 +14,6 @@ export class MainNavbarComponent implements OnInit {
   admin: boolean = false;
   moderador: boolean = false;
   user: boolean = false;
-  userRole: number = 3;
   isLoading: boolean = true;
 
   constructor(
@@ -22,18 +21,13 @@ export class MainNavbarComponent implements OnInit {
     private zone: NgZone
   ) { }
 
-  async ngOnInit(): Promise<void> {
-    console.log("user role: " + this.userRole);
-    console.log("v.admin: " + this.admin)
-    console.log("v.moderador: " + this.moderador)
-    console.log("v.user: " + this.user)
-
+  ngOnInit(): void {
     this.zone.runOutsideAngular(async () => {
       try {
-        this.userRole = await this.authService.getRole();
+        const userRole = this.authService.getRole();
 
         this.zone.run(() => {
-          switch (this.userRole) {
+          switch (userRole) {
             case 0:
               this.admin = true;
               this.moderador = true;

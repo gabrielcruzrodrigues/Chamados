@@ -25,7 +25,7 @@ export class AuthService {
     return this.http.post(urlForRequest, data, { observe: 'response' });
   }
 
-  async getRole(): Promise<number> {
+  getRole(): number {
     return Number(this.cookieService.get('role'));
   }
 

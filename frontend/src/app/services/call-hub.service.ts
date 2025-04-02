@@ -24,8 +24,8 @@ export class CallHubService implements OnInit {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(this.sinalRBackendUrl, {
         transport: signalR.HttpTransportType.WebSockets,
-        withCredentials: true 
-      }) 
+        withCredentials: true
+      })
       .build();
 
 
@@ -34,23 +34,23 @@ export class CallHubService implements OnInit {
     // Recebe as mensagens enviadas pelo servidor
     this.hubConnection.on('ReceiveMessage', (message: string) => {
       console.log(`Mensagem recebida: ${message}`);
-      const userRole = this.authService.getRole().then((userRole: number) => {
-        if (userRole === 0 || userRole === 2) { //admin | moderador
-          this.toastr.info("Um novo chamado foi aberto!")
-          const audio = new Audio('/notification.mp3');
+      const userRole = this.authService.getRole();
 
-          audio.play().catch((error) => {
-            console.error('Erro ao tentar reproduzir o áudio:', error);
-          });
-          
-          audio.onended = () => {
-            if (this.router.url === '/call/my' || this.router.url === '/admin/call') {
-              // recarrega a página após o áudio ser reproduzido
-              window.location.reload();
-            }
-          };
-        }
-      });
+      if (userRole === 0 || userRole === 2) { //admin | moderador
+        this.toastr.info("Um novo chamado foi aberto!")
+        const audio = new Audio('/notification.mp3');
+
+        audio.play().catch((error) => {
+          console.error('Erro ao tentar reproduzir o áudio:', error);
+        });
+
+        audio.onended = () => {
+          if (this.router.url === '/call/my' || this.router.url === '/admin/call') {
+            // recarrega a página após o áudio ser reproduzido
+            window.location.reload();
+          }
+        };
+      }
     });
 
     // Inicia a conexão
