@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -18,7 +18,8 @@ export class MainNavbarComponent implements OnInit {
   isLoading: boolean = true;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private zone: NgZone
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -27,31 +28,35 @@ export class MainNavbarComponent implements OnInit {
     console.log("v.moderador: " + this.moderador)
     console.log("v.user: " + this.user)
 
-    try {
-      this.userRole = await this.authService.getRole();
+    this.zone.runOutsideAngular(async () => {
+      try {
+        this.userRole = await this.authService.getRole();
 
-      switch (this.userRole) {
-        case 0:
-          this.admin = true;
-          this.moderador = true;
-          this.user = true;
-          break;
-        case 1:
-          this.admin = false;
-          this.moderador = false;
-          this.user = true;
-          break;
-        case 2:
-          this.admin = false;
-          this.moderador = true;
-          this.user = true;
-          break;
+        this.zone.run(() => {
+          switch (this.userRole) {
+            case 0:
+              this.admin = true;
+              this.moderador = true;
+              this.user = true;
+              break;
+            case 1:
+              this.admin = false;
+              this.moderador = false;
+              this.user = true;
+              break;
+            case 2:
+              this.admin = false;
+              this.moderador = true;
+              this.user = true;
+              break;
+          }
+          this.isLoading = false;
+        });
+      } catch (error) {
+        console.error("Erro ao obter a role do usuário:", error);
+        this.zone.run(() => (this.isLoading = false));
       }
-    } catch (error) {
-      console.error("Erro ao obter a role do usuário:", error);
-    } finally {
-      this.isLoading = false;
-    }
+    });
   }
 
   logout(): void {
