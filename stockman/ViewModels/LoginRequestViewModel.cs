@@ -4,9 +4,8 @@ namespace stockman.ViewModels
 {
     public class LoginRequestViewModel
     {
-        [Required(ErrorMessage = "O email é obrigatório!")]
-        [EmailAddress(ErrorMessage = "Email inválido!")]
-        public required string Email { get; set; }
+        [Required(ErrorMessage = "O login é obrigatório!")]
+        public required string Login { get; set; }
 
         [Required(ErrorMessage = "A senha é obrigatória!")]
         public required string Password { get; set; }

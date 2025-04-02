@@ -3,12 +3,14 @@ import * as signalR from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CallHubService implements OnInit {
   private hubConnection: signalR.HubConnection | undefined;
+  sinalRBackendUrl: string = environment.sinalRBackendUrl ?? 'http://192.168.1.65:5171/callHub';
 
   constructor(
     private toastr: ToastrService,
@@ -18,14 +20,15 @@ export class CallHubService implements OnInit {
 
   ngOnInit(): void {
     // Cria a conexão com o servidor SignalR
+    console.log(this.sinalRBackendUrl);
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://192.168.1.65:5171/callHub', {
+      .withUrl(this.sinalRBackendUrl, {
         transport: signalR.HttpTransportType.WebSockets,
-        withCredentials: true  // Permite o envio de cookies ou credenciais
-      }) // URL do seu backend
+        withCredentials: true 
+      }) 
       .build();
 
-    // Verifique se a conexão foi criada
+
     console.log('Tentando conectar ao SignalR...');
 
     // Recebe as mensagens enviadas pelo servidor

@@ -31,14 +31,13 @@ export class LoginComponent {
     private toastr: ToastrService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      login: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
   }
 
   onSubmit(): void {
     const login: LoginRequest = this.loginForm.value as LoginRequest;
-    console.log(login);
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.authService.login(login).subscribe({

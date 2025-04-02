@@ -5,15 +5,14 @@ namespace stockman.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Login { get; set; }
 
         [Required]
         public string Password { get; set; }
 
-        public LoginViewModel(string email, string password)
+        public LoginViewModel(string login, string password)
         {
-            Email = email;
+            Login = login;
             Password = password;
         }
     }

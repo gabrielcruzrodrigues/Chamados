@@ -38,7 +38,6 @@ export class AuthService {
   }
 
   saveCookiesLogin(body: any): void {
-    console.log(body);
     this.cookieService.set('token', body.token, {
       path: '/', 
       secure: false, // Trocar para true em prod
