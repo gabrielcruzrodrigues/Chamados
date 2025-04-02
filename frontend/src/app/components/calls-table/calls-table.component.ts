@@ -40,8 +40,8 @@ export class CallsTableComponent implements OnInit {
     this.userId = await this.authService.getId();
   }
 
-  openModal(id: number, option: string, event: Event): void {
-    event.stopPropagation();
+  openModal(id: number, option: string): void {
+    alert('oi')
     if (option === 'resolved') {
       this.callService.resolved(id, this.userId).subscribe({
         next: (response: HttpResponse<any>) => {
@@ -49,7 +49,7 @@ export class CallsTableComponent implements OnInit {
             this.toastr.success("chamado marcado como resolvido!");
             this.calls = [...this.calls.filter(call => call.id !== id)];
           } else {
-            this.toastr.info("Uma resoposta inesperada foi recebida, entre em contato com um administrador!");
+            this.toastr.info("Uma resposta inesperada foi recebida, entre em contato com um administrador!");
           }
         },
         error: (error) => {

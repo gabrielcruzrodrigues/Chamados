@@ -16,12 +16,12 @@
                <td>{{call.createdAt}}</td>
                <th class="actions" >
                <button *ngIf="userRole === 0" 
-                    (click)="openModal(call.id, 'switch', $event)" 
+                    (click)="openModal(call.id, 'switch')" 
                     class="switch action">
                     <i class="fa-solid fa-repeat"></i>
                </button>
                <button 
-                    (click)="openModal(call.id, 'resolved', $event)" 
+                    (click)="openModal(call.id, 'resolved')" 
                     class="check action">
                     <i class="fa-solid fa-check-to-slot"></i>
                </button>
