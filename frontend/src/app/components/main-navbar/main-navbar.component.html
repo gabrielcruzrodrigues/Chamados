@@ -4,10 +4,10 @@
                <li *ngIf="moderador"><a href="/"><i class="fa-solid fa-gauge icon"></i>Dashboard</a></li>
                <li *ngIf="moderador"><a href="/admin/users"><i class="fa-solid fa-user icon"></i>Usuários</a></li> <!-- moderador -->
                <li *ngIf="moderador"><a href="/admin/sectors"><i class="fa-solid fa-vector-square icon"></i>Setores</a></li> <!-- moderador -->
-               <li><a href="/call/open"><i class="fa-solid fa-headset icon"></i>Abrir chamado</a></li>
+               <li *ngIf="user"><a href="/call/open"><i class="fa-solid fa-headset icon"></i>Abrir chamado</a></li>
                <li *ngIf="moderador"><a href="/admin/call"><i class="fa-solid fa-headset icon"></i>Chamados</a></li> <!-- moderador -->
-               <li><a href="/call/my"><i class="fa-solid fa-list-ul icon"></i>Meus chamados</a></li>
-               <li (click)="logout()"><a><i class="fa-solid fa-door-open icon"></i>Sair</a></li>
+               <li *ngIf="user"><a href="/call/my"><i class="fa-solid fa-list-ul icon"></i>Meus chamados</a></li>
+               <li *ngIf="user" (click)="logout()"><a><i class="fa-solid fa-door-open icon"></i>Sair</a></li>
           </ul>
      </nav>
 </header>
