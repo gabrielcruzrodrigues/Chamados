@@ -22,29 +22,25 @@ export class MainNavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.zone.runOutsideAngular(async () => {
-      try {
-        const userRole = this.authService.getRole();
+    try {
+      const userRole = this.authService.getRole();
 
-        this.zone.run(() => {
-          switch (userRole) {
-            case 0:
-              this.admin = true;
-              break;
-            case 1:
-              this.user = true;
-              break;
-            case 2:
-              this.moderador = true;
-              break;
-          }
-          this.isLoading = false;
-        });
-      } catch (error) {
-        console.error("Erro ao obter a role do usuário:", error);
-        this.zone.run(() => (this.isLoading = false));
+      switch (userRole) {
+        case 0:
+          this.admin = true;
+          break;
+        case 1:
+          this.user = true;
+          break;
+        case 2:
+          this.moderador = true;
+          break;
       }
-    });
+      this.isLoading = false;
+    } catch (error) {
+      console.error("Erro ao obter a role do usuário:", error);
+      this.isLoading = false;
+    }
   }
 
   logout(): void {
