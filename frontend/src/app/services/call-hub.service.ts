@@ -12,6 +12,9 @@ export class CallHubService implements OnInit {
   private hubConnection: signalR.HubConnection | undefined;
   sinalRBackendUrl: string = environment.sinalRBackendUrl ?? 'http://192.168.1.65:5171/callHub';
 
+  repeatCount = 0;
+  maxRepeats = 1;
+
   constructor(
     private toastr: ToastrService,
     private authService: AuthService,
@@ -45,8 +48,13 @@ export class CallHubService implements OnInit {
         });
 
         audio.onended = () => {
-          if (this.router.url === '/call/my' || this.router.url === '/admin/call') {
-            // recarrega a página após o áudio ser reproduzido
+          if (this.repeatCount < this.maxRepeats) {
+            this.repeatCount++;
+            audio.play().catch((error) => {
+              console.error('Erro ao tentar reproduzir o áudio novamente:', error);
+            });
+          } else if (this.router.url === '/call/my' || this.router.url === '/admin/call') {
+            // Recarrega a página após a última reprodução
             window.location.reload();
           }
         };
