@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { afterNextRender, Component, NgZone, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -15,34 +15,35 @@ export class MainNavbarComponent implements OnInit {
   moderador: boolean = false;
   user: boolean = false;
   isLoading: boolean = true;
+  userRole: number = 1;
 
   constructor(
     private authService: AuthService,
     private zone: NgZone
-  ) { }
+  ) {
+    afterNextRender(() => {
+      this.userRole = this.authService.getRole();
+    })
+  }
 
   ngOnInit(): void {
     this.zone.runOutsideAngular(async () => {
       try {
-        const userRole = this.authService.getRole();
-
-        this.zone.run(() => {
-          switch (userRole) {
-            case 0:
-              this.admin = true;
-              break;
-            case 1:
-              this.user = true;
-              break;
-            case 2:
-              this.moderador = true;
-              break;
-          }
-          this.isLoading = false;
-        });
+        switch (this.userRole) {
+          case 0:
+            this.admin = true;
+            break;
+          case 1:
+            this.user = true;
+            break;
+          case 2:
+            this.moderador = true;
+            break;
+        }
+        this.isLoading = false;
       } catch (error) {
         console.error("Erro ao obter a role do usuário:", error);
-        this.zone.run(() => (this.isLoading = false));
+        this.isLoading = false;
       }
     });
   }
