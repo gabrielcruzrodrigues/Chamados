@@ -1,6 +1,6 @@
 <header class="appear">
      <nav>
-          @if (!isLoading && moderador || admin) {
+          @if (moderador || admin) {
           <ul>
                <li><a href="/"><i class="fa-solid fa-gauge icon"></i>Dashboard</a></li>
                <li><a href="/admin/users"><i class="fa-solid fa-user icon"></i>Usuários</a></li>
@@ -11,7 +11,7 @@
                <li (click)="logout()"><a><i class="fa-solid fa-door-open icon"></i>Sair</a></li>
           </ul>
           }
-          @if (!isLoading && user) {
+          @if (user) {
           <ul>
                <li><a href="/call/open"><i class="fa-solid fa-headset icon"></i>Abrir chamado</a></li>
                <li><a href="/call/my"><i class="fa-solid fa-list-ul icon"></i>Meus chamados</a></li>
