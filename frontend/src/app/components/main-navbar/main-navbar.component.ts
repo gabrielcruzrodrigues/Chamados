@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { afterNextRender, Component, NgZone, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -15,17 +15,20 @@ export class MainNavbarComponent implements OnInit {
   moderador: boolean = false;
   user: boolean = false;
   isLoading: boolean = true;
+  userRole: number = 1;
 
   constructor(
     private authService: AuthService,
     private zone: NgZone
-  ) { }
+  ) {
+    afterNextRender(() => {
+      this.userRole = this.authService.getRole();
+    })
+  }
 
   ngOnInit(): void {
     try {
-      const userRole = this.authService.getRole();
-
-      switch (userRole) {
+      switch (this.userRole) {
         case 0:
           this.admin = true;
           break;
