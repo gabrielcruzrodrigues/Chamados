@@ -1,0 +1,16 @@
+<nav class="pagination">
+     <ul class="pagination__list">
+          <li class="pagination__item" (click)="backPage()">
+               <a class="pagination__link pagination__link--prev">«</a>
+          </li>
+
+          <!-- <li class="pagination__item"><a href="#" class="pagination__link pagination__link--active">1</a></li> -->
+          @for (page of pages; track $index) {
+               <li (click)="changePage($index)" class="pagination__item"><a class="pagination__link">{{ page }}</a></li>
+          }
+          
+          <li class="pagination__item" (click)="nextPage()">
+               <a class="pagination__link pagination__link--next">»</a>
+          </li>
+     </ul>
+</nav>

@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { MainNavbarComponent } from "../../../../components/main-navbar/main-navbar.component";
 import { TopUserInfosComponent } from "../../../../components/top-user-infos/top-user-infos.component";
-import { MyCallsTableComponent } from "../../../../components/my-calls-table/my-calls-table.component";
 import { SpinningComponent } from "../../../../components/spinning/spinning.component";
-import { MyCallTable } from '../../../../types/Call';
+import { HistoryCallTable, MyCallTable } from '../../../../types/Call';
 import { CallService } from '../../../../services/call.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../../services/auth.service';
 import { formatDate } from '../../../../utils/FormatData';
 import { Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
+import { HistoryCallsTableComponent } from "../../../../components/history-calls-table/history-calls-table.component";
+import { PaginationComponent } from "../../../../components/pagination/pagination.component";
 
 @Component({
   selector: 'app-history',
-  imports: [MainNavbarComponent, TopUserInfosComponent, MyCallsTableComponent, SpinningComponent],
+  imports: [MainNavbarComponent, TopUserInfosComponent, SpinningComponent, HistoryCallsTableComponent, PaginationComponent],
   templateUrl: './history.component.html',
   styleUrl: './history.component.sass'
 })
@@ -21,6 +22,9 @@ export class HistoryComponent {
   title: string = 'Histórico';
   calls: MyCallTable[] = [];
   isLoading: boolean = true;
+  page: number = 1;
+  size: number = 10;
+  totalCountPages: number = 0;
 
   constructor
     (
@@ -31,12 +35,18 @@ export class HistoryComponent {
     ) { }
 
   async ngOnInit(): Promise<void> {
-    this.callService.getResolvedCalls().subscribe({
-      next: (response: HttpResponse<MyCallTable[]>) => {
-        this.calls = response.body ?? [];
+    this.fetchCalls();
+  }
+
+  private fetchCalls(): void {
+    this.callService.getResolvedCalls(this.page, this.size).subscribe({
+      next: (response: HttpResponse<HistoryCallTable>) => {
+        console.log("response - total pages: " + response.body?.totalPages)
+        console.log("response - items: ", response.body?.items)
+        this.totalCountPages = response.body?.totalPages || 1;
+        this.calls = response.body?.items ?? [];
 
         this.calls.sort((a, b) => {
-          console.log('Comparando:', a.createdAt, b.createdAt); 
           const dateA = new Date(a.createdAt).getTime();
           const dateB = new Date(b.createdAt).getTime();
           if (isNaN(dateA) || isNaN(dateB)) {
@@ -46,7 +56,7 @@ export class HistoryComponent {
           return dateB - dateA;
         });
 
-        this.calls = (response.body ?? []).map(call => {
+        this.calls = (response.body?.items ?? []).map(call => {
           call.createdAt = formatDate(call.createdAt);
           call.attendedByName = call.attendedByName ?? '⛔ainda não atendido';
 
@@ -72,5 +82,10 @@ export class HistoryComponent {
         this.isLoading = false;
       }
     })
+  }
+
+  changePage(page: number): void {
+    this.page = page;
+    this.fetchCalls();
   }
 }

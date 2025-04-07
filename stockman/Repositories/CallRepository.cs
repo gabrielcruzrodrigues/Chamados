@@ -1,4 +1,6 @@
 ﻿namespace stockman.Repositories;
+
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using stockman.Database;
 using stockman.Extensions;
@@ -128,16 +130,19 @@ public class CallRepository : ICallRepository
                 Resolved = c.Resolved,
                 Sector = c.Sector
             })
-            .ToListAsync();
+        .ToListAsync();
     }
 
-    public async Task<IEnumerable<CallDto>> GetResolvedCalls()
+    public async Task<PagedResult<CallDto>> GetResolvedCalls(int page, int size)
     {
-        return await _context.Calls
+        var calls = await _context.Calls
             .AsNoTracking()
             .Where(c => c.Resolved.Equals(true))
+            .OrderByDescending(c => c.AttendedTime)
             .Include(c => c.Sector)
             .Include(u => u.User)
+            .Skip((page - 1) * size)
+            .Take(size)
             .Select(c => new CallDto
             {
                 Id = c.Id,
@@ -152,6 +157,16 @@ public class CallRepository : ICallRepository
                 Sector = c.Sector
             })
             .ToListAsync();
+
+        var result = new PagedResult<CallDto>
+        {
+            TotalItems = await _context.Calls.Where(c => c.Resolved.Equals(true)).CountAsync(),
+            Page = page,
+            PageSize = size,
+            Items = calls
+        };
+
+        return result;
     }
 
     public async Task<IEnumerable<Call>> GetBySectorIdAsync(int sectorId)

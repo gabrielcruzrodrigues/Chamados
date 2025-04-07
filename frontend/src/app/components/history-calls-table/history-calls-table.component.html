@@ -1,0 +1,30 @@
+<table class="custom-table">
+     <thead>
+          <tr>
+               <th>Assunto</th>
+               <th>Setor</th>
+               <th>Status</th>
+               <th>Solicitante</th>
+               <th>Técnico</th>
+               <th>Data de abertura</th>
+               <th>Data de manutenção</th>
+          </tr>
+     </thead>
+     <tbody>
+          <tr *ngFor="let call of calls" (click)="openContent(call.content)">
+               <td>{{ call.title }}</td>
+               <td>{{ call.sectorName }}</td>
+               <td>{{ call.status }}</td>
+               <td>{{ call.userName }}</td>
+               <td>{{ call.attendedByName }}</td>
+               <td>{{ call.createdAt }}</td>
+               <td>{{ call.attendedTime }}</td>
+          </tr>
+     </tbody>
+</table>
+<app-spinning [isLoading]="isLoading"></app-spinning>
+<app-content-call-modal 
+     [message]="contentModal" 
+     *ngIf="contentModalOpen"
+     (confirm)="confirm($event)"
+></app-content-call-modal>

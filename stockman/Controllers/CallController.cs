@@ -88,11 +88,11 @@ namespace stockman.Controllers
             return Ok(await _callRepository.GetByUserIdAsync(userId));
         }
 
-        [HttpGet("resolved")]
+        [HttpGet("resolved/{page:int}/{size:int}")]
         [Authorize(policy: "moderador")]
-        public async Task<ActionResult<IEnumerable<CallDto>>> GetResolvedCalls()
+        public async Task<ActionResult<IEnumerable<CallDto>>> GetResolvedCalls(int page, int size)
         {
-            return Ok(await _callRepository.GetResolvedCalls());
+            return Ok(await _callRepository.GetResolvedCalls(page, size));
         }
 
         [HttpGet("sector/{sectorId:int}")]

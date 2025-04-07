@@ -1,6 +1,7 @@
 <app-main-navbar></app-main-navbar>
 <section class="main-section appear">
      <app-top-user-infos [title]="title"></app-top-user-infos>
-     <app-my-calls-table [calls]="calls"></app-my-calls-table>
+     <app-history-calls-table [calls]="calls"></app-history-calls-table>
+     <app-pagination [totalNumberPages]="totalCountPages" (pageSelected)="changePage($event)"></app-pagination>
 </section>
 <app-spinning [isLoading]="isLoading"></app-spinning>

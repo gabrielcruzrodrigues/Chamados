@@ -36,3 +36,11 @@ export type MyCallTable = {
      status: string,
      attendedByName: string
 }
+
+export type HistoryCallTable = {
+     items: MyCallTable[];
+     totalItems: number;
+     page: number;
+     pageSize: number;
+     totalPages: number;
+}

@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { CallTable, CreateCall, MyCallTable } from '../types/Call';
+import { CallTable, CreateCall, HistoryCallTable, MyCallTable } from '../types/Call';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -46,10 +46,10 @@ export class CallService {
     return this.http.put(urlForRequest, data, { headers: headers, observe: 'response' });
   }
 
-  getResolvedCalls(): Observable<HttpResponse<MyCallTable[]>> {
+  getResolvedCalls(page: number, size: number): Observable<HttpResponse<HistoryCallTable>> {
     const accessToken = this.authService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${accessToken}`);
-    const urlForRequest = this.url + `/resolved`;
-    return this.http.get<MyCallTable[]>(urlForRequest, { headers: headers, observe: 'response' });
+    const urlForRequest = this.url + `/resolved/${page}/${size}`;
+    return this.http.get<HistoryCallTable>(urlForRequest, { headers: headers, observe: 'response' });
   }
 }
