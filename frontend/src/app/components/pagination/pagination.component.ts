@@ -1,14 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.sass'
 })
 export class PaginationComponent implements OnInit, OnChanges {
   @Input() totalNumberPages: number = 1;
-  actualPage: number = 1;
+  actualPage: number = 0;
   pages: number[] = [];
   @Output() pageSelected: EventEmitter<number> = new EventEmitter<number>();
 
@@ -29,16 +30,18 @@ export class PaginationComponent implements OnInit, OnChanges {
     }
   }
 
-  changePage(page: number): void {
-    this.actualPage = page + 1;
-    this.pageSelected.emit(page + 1);
-  }
-
-  backPage(): void {
-    
-  }
-
-  nextPage(): void {
-
+  changePage(page: number = 1, option: string): void {
+    this.actualPage = page;
+    switch(option) {
+      case 'random':
+        this.pageSelected.emit(page + 1);
+        break;
+      case 'next':
+        this.pageSelected.emit(this.actualPage + 1);
+        break;
+      case 'back':
+        this.pageSelected.emit(this.actualPage - 1);
+        break;
+    }
   }
 }
