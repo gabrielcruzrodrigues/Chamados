@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { afterNextRender, Component, NgZone, OnInit } from '@angular/core';
+import { afterNextRender, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -14,6 +14,8 @@ export class MainNavbarComponent implements OnInit {
   admin: boolean = false;
   moderador: boolean = false;
   user: boolean = false;
+  callsDropdownOpen = false;
+  @ViewChild('callsToggle') callsToggleElement!: ElementRef;
 
   constructor(
     private authService: AuthService,
@@ -46,5 +48,10 @@ export class MainNavbarComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  callsToggleDropdown() {
+    this.callsDropdownOpen = !this.callsDropdownOpen;
+    this.callsToggleElement.nativeElement.classList.toggle('selected-li');
   }
 }
